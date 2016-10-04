@@ -1,0 +1,13 @@
+---
+
+- name: SWFP project
+  hosts: dev
+  remote_user: vagrant
+
+  roles:
+    - common
+    - role: gantsign.oh-my-zsh
+      users:
+        - username: vagrant
+    - node
+...
