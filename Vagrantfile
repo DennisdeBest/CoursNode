@@ -13,7 +13,7 @@ Vagrant.configure("2") do |config|
 	config.vm.hostname = "coursNode.local"
 	config.hostsupdater.aliases = ["coursNode.local"]
 
-	config.vm.synced_folder "project/", "/var/home/project", type: "nfs"
+	config.vm.synced_folder "project/", "/home/vagrant/project", type: "nfs"
 	config.vm.provider "virtualbox" do |vb|
     	# Display the VirtualBox GUI when booting the machine
     	vb.gui = false
