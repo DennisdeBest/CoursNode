@@ -8,5 +8,6 @@
   with_items: "{{ packages }}"
 
 - name: Install node demon globally
-- npm: name=nodemon global=yes
+  become: yes
+  npm: name=nodemon global=yes
 ...
