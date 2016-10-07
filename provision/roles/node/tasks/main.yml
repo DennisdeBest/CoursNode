@@ -9,5 +9,6 @@
 
 - name: Install node demon globally
   become: yes
-  npm: name=nodemon global=yes
+  npm: name={{ item }} global=yes
+  with_items: "{{ node_packages }}"
 ...
