@@ -12,6 +12,7 @@
   "dependencies": {
     "headless": "^1.0.0",
     "nightmare": "^2.7.0",
-    "sqlite": "^2.2.0"
+    "sqlite": "^2.2.0",
+    "sqlite3": "^3.1.6"
   }
 }
