@@ -6,4 +6,7 @@
   apt: name="{{ item }}" state="latest" update_cache=yes
   become: yes
   with_items: "{{ packages }}"
+
+- name: Install node demon globally
+- npm: name=nodemon global=yes
 ...
