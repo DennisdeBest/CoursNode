@@ -1,12 +1,22 @@
 var Nightmare = require('nightmare');
 var nightmare = Nightmare({ show: true });
-var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database('sudquest.db');
 var Promise = require("bluebird");
 var promises = [];
-//db.serialize(function () {
-//  db.run('CREATE TABLE if not exists infos (title, content)');
-//})
+
+const db = require('sqlite')
+
+db.open('sudrekt.db').then(() => {
+  // Une fois la base ouverte, on créé une table
+  // On n'oublie pas le return qui va permettre de faire suivre la Promise
+  // et donc de gérer le "catch" plus bas, en cas d'erreur
+  return db.run('CREATE TABLE IF NOT EXISTS articles (title, content, date)')
+}).then(() => {
+  console.log('> Database ready')
+}).catch((err) => { // Si on a eu des erreurs
+  console.error('ERR> ', err)
+})
+
+
 function getLinks() {
 	nightmare
 	.goto('http://sudouest.fr')
@@ -25,22 +35,6 @@ function getLinks() {
 		var links = result;
 		//console.log(result)
 		parseLinks(links)
-
-		
-			//promises.push(scrapLink(result[i]))
-			//Promise.all(promises).then(function(){
-				
-			//	console.log(promises);
-			//}
-			//	);
-			//Promise.all(promises).then(result => console.log('All promises resovled', result));
-			Promise.all(promises)
-  //.then(result => console.log('All promises resovled', result)) // Then ["Resolved!", "Rejected!"]
-  .catch(err => console.log('Catch', err));
-		//saveToDb(result.title, result.content)
-	})
-	.catch(function (error) {
-		console.error('Search failed:', error);
 	});
 
 
@@ -94,8 +88,10 @@ function parseLinks(links){
 
 	scrapLink(link).then(function(result)
 	{
-		console.log(result.title);
-		console.log(links);
+		//console.log(result.title);
+		//console.log(links);
+
+		saveToDb(result.title, result.content)
 		parseLinks(links);
 	})
 }
@@ -108,17 +104,22 @@ function saveToDb(title, content){
 	if (!content){
 		return Promise.reject(new Error("Missing content"));
 	}
+
 	//make sure the record doesn't already exist
-	db.get("SELECT * FROM infos WHERE title='"+title+"'", function (err, row) {
-		if(!row){
-			db.run("INSERT INTO infos VALUES (?, ?)", [title, content]);
+	db.get("SELECT * FROM articles WHERE title=?",title).then((response) => {
+console.log(response);
+		if(!response){
+			console.log("New article inserted");
+			return db.run("INSERT INTO articles VALUES (?, ?, ?)", title, content, 1);
 		}else {
 			console.log("Record with the same title already exists");
 		}
-		db.close();
+	})
+		
+	//	db.close();
 
-	});
-	//console.log(db.query(query))
-}
+
+	}
+	
 
 getLinks()

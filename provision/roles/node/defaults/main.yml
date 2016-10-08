@@ -8,3 +8,5 @@ node_packages:
   - nodemon
   - nightmarejs
   - sqlite3
+  - sqlite
+  - bluebird
