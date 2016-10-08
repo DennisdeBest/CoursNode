@@ -1,7 +1,7 @@
-var Nightmare = require('nightmare');
-var nightmare = Nightmare({ show: true });
-var Promise = require("bluebird");
-var promises = [];
+const Nightmare = require('nightmare');
+const nightmare = Nightmare({ show: true });
+const Promise = require("bluebird");
+const promises = [];
 
 const db = require('sqlite')
 
@@ -50,8 +50,8 @@ var scrapLink = function(link){
 		.screenshot('page.png')
 		.evaluate(function () {
 			if($('.long').text()) {
-				var title = $('.entry-title').text();
-				var content = $('.long').text();
+				var title = $('.entry-title').html();
+				var content = $('.long').html();
 				var result = {
 					title: title,
 					content: content
@@ -107,18 +107,14 @@ function saveToDb(title, content){
 
 	//make sure the record doesn't already exist
 	db.get("SELECT * FROM articles WHERE title=?",title).then((response) => {
-console.log(response);
 		if(!response){
 			console.log("New article inserted");
 			return db.run("INSERT INTO articles VALUES (?, ?, ?)", title, content, 1);
 		}else {
 			console.log("Record with the same title already exists");
 		}
-	})
-		
+	})		
 	//	db.close();
-
-
 	}
 	
 
