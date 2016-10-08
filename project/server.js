@@ -10,10 +10,21 @@ const db = require('sqlite')
 const TPL_HEAD = `
 <html>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href=`+__dirname+`/sudRekt.css>
+<link rel="stylesheet" type="text/css" href="http://assets.sudouest.fr/stylesheets/main/main.css?v=1473062945">
+<style>
+body {
+	padding: 15px;
+	width:80%;
+	min-width: 500px;
+	margin: auto;
+}
+.title {
+	text-align: center;
+}
+</style>
 <title>SudRekt</title>
 <body>
-<h1>SudRekt</h1>
+<h1 class="title">SudRekt</h1>
 `
 
 const TPL_FOOT = `
@@ -53,7 +64,7 @@ function showPage (req, res) {
 
       // On écrit le commentaire
       res.write(`
-      	<h2>${article.title}</h2>
+      	<h1 class="title extra-large bitter entry-title">${article.title}</h2>
         <p class="article">
            ${article.content}
         </p>
