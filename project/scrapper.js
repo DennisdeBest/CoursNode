@@ -52,9 +52,11 @@ var scrapLink = function(link){
 			if($('.long').text()) {
 				var title = $('.entry-title').html();
 				var content = $('.long').html();
+				var date = $('.publishing').html();
 				var result = {
 					title: title,
-					content: content
+					content: content,
+					date: date
 				}
 				return result;
 			}
@@ -88,16 +90,13 @@ function parseLinks(links){
 
 	scrapLink(link).then(function(result)
 	{
-		//console.log(result.title);
-		//console.log(links);
-
-		saveToDb(result.title, result.content)
+		saveToDb(result.title, result.content, result.date)
 		parseLinks(links);
 	})
 }
 
 
-function saveToDb(title, content){
+function saveToDb(title, content, date){
 	if (!title){
 		return Promise.reject(new Error("Missing title"));
 	}
@@ -109,7 +108,7 @@ function saveToDb(title, content){
 	db.get("SELECT * FROM articles WHERE title=?",title).then((response) => {
 		if(!response){
 			console.log("New article inserted");
-			return db.run("INSERT INTO articles VALUES (?, ?, ?)", title, content, 1);
+			return db.run("INSERT INTO articles VALUES (?, ?, ?)", title, content, date);
 		}else {
 			console.log("Record with the same title already exists");
 		}

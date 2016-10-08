@@ -55,8 +55,6 @@ function showPage (req, res) {
   // On commence à écrire le début de notre HTML
   res.write(TPL_HEAD)
 
-  // On lance la récupération des commentaires
-  // Puis ensuite, une fois chargés...
   db.all('SELECT * FROM articles ORDER BY date DESC').then((articles) => {
     // ...on fait une boucle commentaire par commentaire
     for (let i = 0, l = articles.length; i < l; i++) {
@@ -65,6 +63,7 @@ function showPage (req, res) {
       // On écrit le commentaire
       res.write(`
       	<h1 class="title extra-large bitter entry-title">${article.title}</h2>
+      	<span class="publishing">${article.date}</span>
         <p class="article">
            ${article.content}
         </p>
