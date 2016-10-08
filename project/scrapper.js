@@ -2,7 +2,7 @@ var Nightmare = require('nightmare');
 var nightmare = Nightmare({ show: true });
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('sudquest.db');
-var Q = require('q');
+var Promise = require("bluebird");
 var promises = [];
 //db.serialize(function () {
 //  db.run('CREATE TABLE if not exists infos (title, content)');
@@ -21,14 +21,22 @@ function getLinks() {
 		return premiumLinks;
 	})
 	.then(function (result) {
+		//var scrapLink= Promise.promisify(scrapLink())
+		var links = result;
 		//console.log(result)
-		for(var i = 0; i<result.length; i++){
-			promises.push(scrapLink(result[i]));
-		}
-		Promise.all(promises)
-  .then(result => console.log('All promises resovled', result)) // Then ["Resolved!", "Rejected!"]
+		parseLinks(links)
+
+		
+			//promises.push(scrapLink(result[i]))
+			//Promise.all(promises).then(function(){
+				
+			//	console.log(promises);
+			//}
+			//	);
+			//Promise.all(promises).then(result => console.log('All promises resovled', result));
+			Promise.all(promises)
+  //.then(result => console.log('All promises resovled', result)) // Then ["Resolved!", "Rejected!"]
   .catch(err => console.log('Catch', err));
-  nightmare.end();
 		//saveToDb(result.title, result.content)
 	})
 	.catch(function (error) {
@@ -38,9 +46,9 @@ function getLinks() {
 
 }
 
-function scrapLink(link){
+var scrapLink = function(link){
 	return new Promise((resolve, reject) => {
-		console.log('http://sudouest.fr'+link);
+		//console.log('http://sudouest.fr'+link);
 		nightmare
 		.goto('http://sudouest.fr'+link)
 		.wait('.long')
@@ -71,8 +79,27 @@ function scrapLink(link){
 		});
 
 	});
-	
+
 };
+
+function parseLinks(links){
+	console.log(links.length);
+	if(links.length > 0){
+		var link = links.pop();
+		console.log(link);
+	}
+	else {
+		return false;
+	}
+
+	scrapLink(link).then(function(result)
+	{
+		console.log(result.title);
+		console.log(links);
+		parseLinks(links);
+	})
+}
+
 
 function saveToDb(title, content){
 	if (!title){
