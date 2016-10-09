@@ -16,7 +16,7 @@ program
 program.parse(process.argv)
 
 if (program.read) {
-	if(program.read == true) {
+	if(program.read === true) {
 		reader.list().then(function(){
 			inquirer.prompt([
 			{

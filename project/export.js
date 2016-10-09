@@ -7,7 +7,8 @@ module.exports = {
 		var articleString = article.title + article.date + article.content;
 		var articleHTML = "<meta charset=\"UTF-8\"> " +
 		"<link rel=\"stylesheet\" type=\"text/css\" href=\"http://assets.sudouest.fr/stylesheets/main/main.css?v=1473062945\">" +
-		"<body>" + articleString + "</body></html>";
+		"<style> .content { width: 1024px; padding: 15px; margin:auto;} </style>" + 
+		"<body><div class=\"content\">" + articleString + "</div></body></html>";
 
 		var dir = __dirname + "/articles/";
 		var filename = slugify((article.title).substr(0,25))+".html";
