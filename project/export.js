@@ -9,7 +9,7 @@ module.exports = {
 		var articleString = article.title + article.date + article.content;
 		var articleHTML = "<meta charset=\"UTF-8\"> " +
 		"<link rel=\"stylesheet\" type=\"text/css\" href=\"http://assets.sudouest.fr/stylesheets/main/main.css?v=1473062945\">" +
-		"<style> .content { width: 1024px; padding: 15px; margin:auto;} </style>" + 
+		"<style> .content { width: 1000px; margin:auto;} </style>" + 
 		"<body><div class=\"content\">" + articleString + "</div></body></html>";
 
 		//Set save dir and name

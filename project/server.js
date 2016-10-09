@@ -12,10 +12,8 @@ const TPL_HEAD = `
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="http://assets.sudouest.fr/stylesheets/main/main.css?v=1473062945">
 <style>
-body {
-	padding: 15px;
-	width:80%;
-	min-width: 500px;
+.content {
+	width:1000px;
 	margin: auto;
 }
 .title {
@@ -24,10 +22,12 @@ body {
 </style>
 <title>SudRekt</title>
 <body>
+<div class="content">
 <h1 class="title">SudRekt</h1>
 `
 
 const TPL_FOOT = `
+</div>
 </body>
 </html>
 `
@@ -55,7 +55,7 @@ function showPage (req, res) {
   // On commence à écrire le début de notre HTML
   res.write(TPL_HEAD)
 
-  db.all('SELECT * FROM articles ORDER BY date DESC').then((articles) => {
+  db.all('SELECT rowid, * FROM articles ORDER BY rowid DESC').then((articles) => {
     // ...on fait une boucle commentaire par commentaire
     for (let i = 0, l = articles.length; i < l; i++) {
       let article = articles[i]
