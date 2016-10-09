@@ -61,6 +61,7 @@
 			.evaluate(function () 
 			{
 				$('.ad-box').remove();
+				$('.promo-payant').remove();
 				if($('.long').text()) 
 				{
 					var title = $('.entry-title').html();
