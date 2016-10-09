@@ -30,7 +30,6 @@ module.exports = {
 			console.log('> Database ready')
 			db.get('SELECT * FROM articles WHERE rowid = ?', number).then((article) => {
 				resolve(article)
-				//console.log(article.title + article.date + "\n" + article.content)
 			})
   }).catch((err) => { // On gère les erreurs possibles
   	console.error('ERR> ', err)

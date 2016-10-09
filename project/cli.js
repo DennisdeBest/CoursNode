@@ -15,19 +15,21 @@ program
 // fonction synchrone
 program.parse(process.argv)
 
-if (program.world) {
-console.log('Hello world!')
-} else if (program.read) {
+if (program.read) {
 	if(program.read == true) {
 		reader.list().then(function(){
-		inquirer.prompt([
-		{
-			type:'input',
-			message:'Enter the number of the article you want to read',
-			name:'articleNum'
-		}]).then((number) => {
-			reader.one(number.articleNum).then(article => saveOneArticle(article))
-		})
+			inquirer.prompt([
+			{
+				type:'input',
+				message:'Enter the number of the article you want to read',
+				name:'articleNum'
+			}]).then((number) => {
+				reader.one(number.articleNum).then(article => {
+					console.log(article.content);
+					saveOneArticle(article);
+				})
+
+			})
 		})
 	}
 	else {
@@ -35,31 +37,32 @@ console.log('Hello world!')
 			console.log("not a valid number")
 		}
 		else {
-			reader.one(program.read).then(article => saveOneArticle(article));
+			reader.one(program.read).then(article => {
+					console.log(article.content);
+					saveOneArticle(article);
+				})
 		}
+
 	}
 } else if (program.scrap) {
-scrapper.run();
+	scrapper.run();
 } else {
-program.help()
+	program.help()
 }
 
 function saveOneArticle(article){
-	var articleString = article.title + article.date + article.content;
-	console.log(article.title + article.date + article.content);
-				inquirer.prompt([
-				{
-					type:'input',
-					message:'save article to HTML file ? (y/n)',
-					name:'save'
-				}
-					]).then((save) => {
-						if(save.save == 'y'){
-							exportArticle.one(articleString);
-							console.log("Saving to ...")
-						}
-						else{
-							console.log("Article not saved")
-						}
-					});
+	inquirer.prompt([
+	{
+		type:'input',
+		message:'save article to HTML file ? (y/n)',
+		name:'save'
+	}
+	]).then((save) => {
+		if(save.save == 'y'){
+			exportArticle.one(article);
+		}
+		else{
+			console.log("Article not saved")
+		}
+	});
 }
