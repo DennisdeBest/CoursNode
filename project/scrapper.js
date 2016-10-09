@@ -1,9 +1,17 @@
+#!/usr/bin/node
 	const Nightmare = require('nightmare');
 	const nightmare = Nightmare({ show: true });
 	const Promise = require("bluebird");
 	const promises = [];
 
 	const db = require('sqlite')
+
+	module.exports = {
+  run: function () {
+    getLinks();
+  },
+};
+
 
 	db.open('sudrekt.db').then(() => {
 	  // Une fois la base ouverte, on créé une table
@@ -121,7 +129,3 @@
 			}
 		})		
 	}
-
-
-	getLinks()
-
