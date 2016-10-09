@@ -3,11 +3,12 @@ const program = require('commander')
 const inquirer = require('inquirer')
 const scrapper = require('./scrapper.js')
 const reader = require('./reader.js')
+const exportArticle = require('./export.js')
 
 program
 .version('1.0.0')
-.option('-w, --world', 'Show hello world')
-.option('-r, --read [number]', 'Show available articles')
+.option('-e, --export', 'Export articles to HTML file')
+.option('-r, --read [number]', 'Show available articles or enter a number to display an article')
 .option('-s, --scrap', 'Scrap SudOuest.fr')
 
 // On parse (convertit en format utilisable) les options
@@ -25,7 +26,7 @@ console.log('Hello world!')
 			message:'Enter the number of the article you want to read',
 			name:'articleNum'
 		}]).then((number) => {
-			reader.one(number.articleNum)
+			reader.one(number.articleNum).then(article => saveOneArticle(article))
 		})
 		})
 	}
@@ -34,11 +35,31 @@ console.log('Hello world!')
 			console.log("not a valid number")
 		}
 		else {
-			reader.one(program.read);
+			reader.one(program.read).then(article => saveOneArticle(article));
 		}
 	}
 } else if (program.scrap) {
 scrapper.run();
 } else {
 program.help()
+}
+
+function saveOneArticle(article){
+	var articleString = article.title + article.date + article.content;
+	console.log(article.title + article.date + article.content);
+				inquirer.prompt([
+				{
+					type:'input',
+					message:'save article to HTML file ? (y/n)',
+					name:'save'
+				}
+					]).then((save) => {
+						if(save.save == 'y'){
+							exportArticle.one(articleString);
+							console.log("Saving to ...")
+						}
+						else{
+							console.log("Article not saved")
+						}
+					});
 }

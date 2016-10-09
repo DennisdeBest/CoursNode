@@ -23,16 +23,19 @@ module.exports = {
 	
 	},
 	one: function(number) {
-		console.log(number);
+		return new Promise((resolve, reject) => {
 		db.open('sudrekt.db').then(() => {
-			return db.run('CREATE TABLE IF NOT EXISTS articles (title, content, date)')
+			db.run('CREATE TABLE IF NOT EXISTS articles (title, content, date)')
 		}).then(() => {
 			console.log('> Database ready')
 			db.get('SELECT * FROM articles WHERE rowid = ?', number).then((article) => {
-				console.log(article.title + article.date + "\n" + article.content)
+				resolve(article)
+				//console.log(article.title + article.date + "\n" + article.content)
 			})
   }).catch((err) => { // On gère les erreurs possibles
   	console.error('ERR> ', err)
   })
+		})
+
 }
 }
