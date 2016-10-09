@@ -2,18 +2,22 @@
 const fs = require ('fs')
 const Promise = require('bluebird')
 
+//Make function accesible to another script
 module.exports = {
 	one: function(article){
+		//Turn the article into usable HTML
 		var articleString = article.title + article.date + article.content;
 		var articleHTML = "<meta charset=\"UTF-8\"> " +
 		"<link rel=\"stylesheet\" type=\"text/css\" href=\"http://assets.sudouest.fr/stylesheets/main/main.css?v=1473062945\">" +
 		"<style> .content { width: 1024px; padding: 15px; margin:auto;} </style>" + 
 		"<body><div class=\"content\">" + articleString + "</div></body></html>";
 
+		//Set save dir and name
 		var dir = __dirname + "/articles/";
 		var filename = slugify((article.title).substr(0,25))+".html";
 		var filepath = dir + filename;
 
+		//Check if the file exists, if so do not save.
 		fs.stat(filepath, function(err, stat) {
 			if(err == null) {
 				console.log('File already exists ! ');
@@ -28,6 +32,7 @@ module.exports = {
 	}
 }
 
+//slugify article title for filename
 function slugify(text)
 {
 	return text.toString().toLowerCase()
@@ -38,6 +43,7 @@ function slugify(text)
     .replace(/-+$/, '');            // Trim - from end of text
 }
 
+//if no file exists save the article to HTML file
 function saveFile(path, data){
 	fs.writeFile(path, data, function(err) {
 		if(err) {

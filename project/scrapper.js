@@ -24,7 +24,7 @@
 		console.error('ERR> ', err)
 	})
 
-
+	//Main function, get all premium links from the site and pass them on to get scrapped
 	function getLinks() {
 		nightmare
 		.goto('http://sudouest.fr')
@@ -47,6 +47,9 @@
 		})
 	};
 
+	//Function to scrap a single link,
+	//Params : link(string)
+	//Return : result(Article Object)
 	var scrapLink = function(link)
 	{
 		return new Promise((resolve, reject) => {
@@ -87,7 +90,9 @@
 		})
 	};
 
-
+	//Due to the asynchronous nature of JS a recurrent function is needed
+	//to wait for the result of the last page being scrapped before scrapping the next one
+	// Params : links(array)
 	function parseLinks(links){
 		if(links.length > 0){
 			var link = links.pop();
@@ -99,7 +104,7 @@
 		})
 		}
 		else {	
-			
+			//Set a timeout to make sure the last article is saved before exiting.
 			setTimeout(function(){
 				console.log("*****\nThe nightmare is over\n*****");
 				process.exit()
@@ -107,7 +112,8 @@
 		}
 	}
 
-
+	//Save an article to the database
+	//Params : title(string), content(string), data(string)
 	function saveToDb(title, content, date){
 		if (!title){
 			return Promise.reject(new Error("Missing title"));
