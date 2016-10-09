@@ -6,8 +6,8 @@ const Promise = require('bluebird')
 module.exports = {
 	one: function(article){
 		//Turn the article into usable HTML
-		var articleString = article.title + article.date + article.content;
-		var articleHTML = "<meta charset=\"UTF-8\"> " +
+		var articleString = "<h1 class=\"title extra-large bitter entry-title\">"+article.title +"</h1>"+ article.date +"<br>"+ article.content;
+		var articleHTML = "<html><meta charset=\"UTF-8\"> " +
 		"<link rel=\"stylesheet\" type=\"text/css\" href=\"http://assets.sudouest.fr/stylesheets/main/main.css?v=1473062945\">" +
 		"<style> .content { width: 1000px; margin:auto;} </style>" + 
 		"<body><div class=\"content\">" + articleString + "</div></body></html>";

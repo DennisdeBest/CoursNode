@@ -60,6 +60,7 @@
 			.screenshot('page.png')
 			.evaluate(function () 
 			{
+				$('.ad-box').remove();
 				if($('.long').text()) 
 				{
 					var title = $('.entry-title').html();
