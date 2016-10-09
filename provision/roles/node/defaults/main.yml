@@ -10,3 +10,5 @@ node_packages:
   - sqlite3
   - sqlite
   - bluebird
+  - inquirer
+  - commander

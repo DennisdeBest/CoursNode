@@ -36,4 +36,5 @@ Lancer le script avec xvfb-run node "le nom du script"
 Dans le dossier project lancer le fichier cli.js avec **node cli.js** ou ** ./cli.js**, les options sont : 
 * -r --read [numéro] Si un numéro est rentré affiche l'article correspondant sinon affiche la liste des articles disponibles
 * -s --scrap : Lance scrapper.js et stockes les nouveaux articles dans la BDD
+* -S --server : Démarre un serveur web pour l'affichage des articles sur le port 8080
 
