@@ -13,11 +13,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "async": "^2.0.1",
     "bluebird": "^3.4.6",
     "headless": "^1.0.0",
+    "inquirer": "^1.2.1",
     "nightmare": "^2.7.0",
     "q": "^1.4.1",
     "sqlite": "^2.2.0",
-    "sqlite3": "^3.1.6"
+    "sqlite3": "^3.1.6",
+    "wait.for": "^0.6.6"
   }
 }
