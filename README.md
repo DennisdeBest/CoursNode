@@ -1,4 +1,4 @@
-#VM pour le développement NodeJS
+#SudRekt
 
 ###Prérequis
 
