@@ -13,7 +13,7 @@ Vagrant.configure("2") do |config|
 	config.vm.hostname = "sudrekt.com"
 	config.hostsupdater.aliases = ["sudrekt.com"]
 
-	config.vm.synced_folder "project/", "/home/vagrant/project", type: "nfs"
+       	config.vm.synced_folder "project/", "/home/vagrant/project", type: "nfs"
 	config.vm.provider "virtualbox" do |vb|
     	# Display the VirtualBox GUI when booting the machine
     	vb.gui = false

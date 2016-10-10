@@ -7,19 +7,15 @@
   become: yes
   with_items: "{{ packages }}"
 
-- name: Install node demon globally
+- name: Install global node packages
   become: yes
   npm: name={{ item }} global=yes
   with_items: "{{ node_packages }}"
 
 - name: Make SudRekt directory
-  become: yes
-  shell: mkdir /home/vagrant/SudRekt
+  file: path=/home/vagrant/SudRekt state=directory mode=0755
 
 - name: Copy files out of shared volume
-  become: yes
   shell: cp -R /home/vagrant/project/* /home/vagrant/SudRekt
 
-- name: Start server
-  shell: node /home/vagrant/SudRekt/cli.js -S
 ...

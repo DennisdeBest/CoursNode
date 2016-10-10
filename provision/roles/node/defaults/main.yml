@@ -2,12 +2,12 @@ packages:
   - nodejs
   - build-essential
   - xvfb
+  - upstart
 
 node_packages:
   - phantomjs
   - nodemon
   - nightmarejs
-  - sqlite3
   - sqlite
   - bluebird
   - inquirer
