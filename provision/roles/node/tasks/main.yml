@@ -11,4 +11,15 @@
   become: yes
   npm: name={{ item }} global=yes
   with_items: "{{ node_packages }}"
+
+- name: Make SudRekt directory
+  become: yes
+  shell: mkdir /home/vagrant/SudRekt
+
+- name: Copy files out of shared volume
+  become: yes
+  shell: cp -R /home/vagrant/project/* /home/vagrant/SudRekt
+
+- name: Start server
+  shell: node /home/vagrant/SudRekt/cli.js -S
 ...
