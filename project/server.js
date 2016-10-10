@@ -46,7 +46,7 @@ db.open('sudrekt.db').then(() => {
 
 http.createServer((req, res) => {
     showPage(req, res)
-}).listen(8080);
+}).listen(80);
 
 function showPage (req, res) {
   // Statut: 200, Contenu: page HTML
