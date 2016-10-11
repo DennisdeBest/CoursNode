@@ -62,6 +62,7 @@
 			{
 				$('.ad-box').remove();
 				$('.promo-payant').remove();
+				$('#pub_teads').remove();
 				if($('.long').text()) 
 				{
 					var title = $('.entry-title').html();
