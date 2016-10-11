@@ -18,4 +18,10 @@
 - name: Copy files out of shared volume
   shell: cp -R /home/vagrant/project/* /home/vagrant/SudRekt
 
+- name: Install packages based on package.json.
+  npm: path=/home/vagrant/SudRekt/
+
+- name: Install packages based on package.json.
+  npm: path=/home/vagrant/project
+
 ...
