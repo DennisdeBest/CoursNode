@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 const program = require('commander')
 const inquirer = require('inquirer')
-const scrapper = require('./scrapper.js')
-const reader = require('./reader.js')
-const exportArticle = require('./export.js')
-const server = require('./server.js')
+const scrapper = require('./bin/scrapper.js')
+const reader = require('./bin/reader.js')
+const exportArticle = require('./bin/export.js')
+const server = require('./bin/server.js')
 
 //Init program
 program
