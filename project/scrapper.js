@@ -111,7 +111,7 @@
 			setTimeout(function(){
 				console.log("*****\nThe nightmare is over\n*****");
 				process.exit()
-			}, 10000);
+			}, 5000);
 		}
 	}
 

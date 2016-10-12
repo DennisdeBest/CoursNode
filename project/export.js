@@ -1,31 +1,3 @@
-
-Skip to content
-This repository
-
-    Pull requests
-    Issues
-    Gist
-
-    @DennisdeBest
-
-1
-0
-
-    0
-
-DennisdeBest/CoursNode
-Code
-Issues 0
-Pull requests 0
-Projects 0
-Wiki
-Pulse
-Graphs
-Settings
-CoursNode/project/export.js
-55e7f32 3 days ago
-@DennisdeBest DennisdeBest Remove publicity block from scrapped pages
-55 lines (47 sloc) 1.74 KB
 #!/usr/bin/node
 const fs = require ('fs')
 const Promise = require('bluebird')
@@ -81,9 +53,5 @@ function saveFile(path, data){
 		console.log("File saved to "+path);
 	})
 }
-
-    Contact GitHub API Training Shop Blog About 
-
-    © 2016 GitHub, Inc. Terms Privacy Security Status Help 
 
 
