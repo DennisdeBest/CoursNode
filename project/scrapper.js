@@ -29,7 +29,7 @@
 		nightmare
 		.goto('http://sudouest.fr')
 		.wait('#cdx')
-		.inject('js', `node_modules/jquery/dist/jquery.js`)
+		.inject('js', `node_modules/jquery/dist/jquery.min.js`)
 		.evaluate(function() 
 		{
 			var premiumObjects = $('.premium').find('h2').find('a');

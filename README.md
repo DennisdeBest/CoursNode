@@ -57,7 +57,7 @@ Dans le dossier project lancer le fichier cli.js avec **node cli.js**, **./cli.j
     * Lancement du serveur sur vagrant up
     * Ajout du scrapping au cron +/- 5 heures
     * si MySQL création et copie de la base + dump de la base toutes les 24h
-* Injection de jQuery.min dans scrapper.js au lieu de jQuery
+* ~~Injection de jQuery.min dans scrapper.js au lieu de jQuery~~
 * Lancement de plusieurs instances de nightmare pour scrapper plusieurs page en mutlithread ? 
 * Parcourir tout le site à la recherche d'articles premium pas que la première page
 
