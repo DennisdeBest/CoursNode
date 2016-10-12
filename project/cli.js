@@ -1,4 +1,4 @@
-#!/usr/bin/node
+#!/usr/bin/env node
 const program = require('commander')
 const inquirer = require('inquirer')
 const scrapper = require('./scrapper.js')
