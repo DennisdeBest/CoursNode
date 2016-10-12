@@ -10,10 +10,10 @@ Vagrant.configure("2") do |config|
 	config.vm.box_url = "https://atlas.hashicorp.com/ARTACK/boxes/debian-jessie"
 
 	config.vm.network "private_network", ip: "10.0.0.15"
-	config.vm.hostname = "coursNode.local"
-	config.hostsupdater.aliases = ["coursNode.local"]
+	config.vm.hostname = "sudrekt.com"
+	config.hostsupdater.aliases = ["sudrekt.com"]
 
-	config.vm.synced_folder "project/", "/home/vagrant/project", type: "nfs"
+       	config.vm.synced_folder "project/", "/home/vagrant/project", type: "nfs"
 	config.vm.provider "virtualbox" do |vb|
     	# Display the VirtualBox GUI when booting the machine
     	vb.gui = false
