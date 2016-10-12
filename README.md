@@ -46,3 +46,18 @@ Dans le dossier project lancer le fichier cli.js avec **node cli.js**, **./cli.j
 * -s --scrap : Lance scrapper.js et stockes les nouveaux articles dans la BDD
 * -S --server : Démarre un serveur web pour l'affichage des articles sur le port 8080
 
+##Améliorations à faire
+* Envoie d'un mail quand un nouvel article est stocké en base (configurable)
+* Fix du headless scrapping qui ne se lance pas tout le temps
+* Utilisation d'un base de données MySQL pour éviter le problème de lock de sqlite sur des volumes partagés NFS
+* Ecriture de logs infos et error sur lancement du scrapper et du serveur
+* Utilisation de templates pour l'affichage web
+* Stockage en text au lieu de html pour la lecture en CLI avec des retours à la ligne
+* provisioning : 
+    * Lancement du serveur sur vagrant up
+    * Ajout du scrapping au cron +/- 5 heures
+    * si MySQL création et copie de la base + dump de la base toutes les 24h
+* Injection de jQuery.min dans scrapper.js au lieu de jQuery
+* Lancement de plusieurs instances de nightmare pour scrapper plusieurs page en mutlithread ? 
+* Parcourir tout le site à la recherche d'articles premium pas que la première page
+
