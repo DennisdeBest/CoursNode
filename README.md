@@ -42,7 +42,7 @@ Lancer le script avec xvfb-run node cli.js -s
 ####Fonctionnement
 
 Dans le dossier project lancer le fichier cli.js avec **node cli.js**, **./cli.js** ou **sudrekt** si vous avez installé le paquet en global, les options sont :
-* -r --read [numéro] Si un numéro est rentré affiche l'article correspondant sinon affiche la liste des articles disponibles
+* -r --read [numéro] Si un numéro est rentré affiche l'article correspondant sinon affiche la liste des articles disponibles, sauvegarde de l'article en fichier html possible que quand le fichier est lancé avec node cli.js ou ./cli.js (pas de droits d'écriture dans /usr/bin/..)
 * -s --scrap : Lance scrapper.js et stockes les nouveaux articles dans la BDD
 * -S --server : Démarre un serveur web pour l'affichage des articles sur le port 8080
 

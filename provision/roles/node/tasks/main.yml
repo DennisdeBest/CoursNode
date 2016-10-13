@@ -21,6 +21,10 @@
 - name: Install packages based on package.json.
   npm: path=/home/vagrant/SudRekt/
 
+- name: Install packages based on package.json. globally
+  become: yes
+  npm: path=/home/vagrant/SudRekt/ global=yes
+
 - name: Install packages based on package.json.
   npm: path=/home/vagrant/project
 
