@@ -1,6 +1,7 @@
 #!/usr/bin/node
 const fs = require ('fs')
 const Promise = require('bluebird')
+const path = require('path')
 
 //Make function accesible to another script
 module.exports = {
@@ -13,7 +14,7 @@ module.exports = {
 		"<body><div class=\"content\">" + articleString + "</div></body></html>";
 
 		//Set save dir and name
-		var dir = __dirname + "/articles/";
+		var dir = path.join(__dirname,"..", "articles/");
 		var filename = slugify((article.title).substr(0,25))+".html";
 		var filepath = dir + filename;
 
