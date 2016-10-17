@@ -1,6 +1,7 @@
 {% extends '../index.twig' %}
 {% block content %}
 {% for user in users %}
-<strong>{{user.name}}</strong> {{user.email}}<form action="/users/delete/{{user.rowid}}" method="POST"><input type="submit" value="X"></form><br>
+<strong>{{user.name}}</strong> {{user.email}}
+<form class="formButton" method="POST" action="/users/{{user.rowid}}?_method=DELETE"><input type="submit" value="Delete"></form><form class="formButton" method="GET" action="/users/{{user.rowid}}/edit"><input type="submit" value="Edit"></form><br>
 {% endfor %}
 {% endblock %}

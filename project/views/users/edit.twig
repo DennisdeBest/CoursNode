@@ -1,7 +1,11 @@
 {% extends '../index.twig' %}
 {% block content %}
 <h2>Add / Edit</h2>
-<form action="" method="POST">
+{% if user %}
+<form method="POST" action="/users/{{user.rowid}}?_method=PUT">
+{% else %}
+<form method="POST" action="/users/add">
+{% endif %}
 <label for="name">Name : </label>
 <input value="{{user.name}}" name="name" id="name"><br>
 <label for="email">Email : </label>
