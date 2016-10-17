@@ -1,0 +1,11 @@
+{% extends '../index.twig' %}
+{% block content %}
+<h2>Add / Edit</h2>
+<form action="" method="POST">
+<label for="name">Name : </label>
+<input value="{{user.name}}" name="name" id="name"><br>
+<label for="email">Email : </label>
+<input value="{{user.email}}" name="email" id="email"><br>
+<input type="submit"/>
+</form>
+{% endblock %}
