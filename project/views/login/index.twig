@@ -1,20 +1,8 @@
 {% extends '../index.twig' %}
 {% block content %}
 <h2>Add / Edit</h2>
-{% if user %}
-<form method="POST" action="/users/{{user.rowid}}?_method=PUT">
-{% else %}
-<form method="POST" action="/users/add">
-{% endif %}
+<form method="POST" action="session">
 <table class="table-fill">
-<tr>
-<td>
-<label for="name">Name : </label>
-</td>
-<td>
-<input value="{{user.name}}" name="name" id="name">
-</td>
-</tr>
 <tr>
 <td>
 <label for="email">Email : </label>
@@ -29,14 +17,6 @@
 </td>
 <td>
 <input type="password" value="" name="password" id="password">
-</td>
-</tr>
-<tr>
-<td>
-<label for="passwordRepeat">Repeat password : </label>
-</td>
-<td>
-<input type="password" value="" name="passwordRepeat" id="passwordRepeat">
 </td>
 </tr>
 <tr>

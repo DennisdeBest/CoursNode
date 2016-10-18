@@ -1,19 +1,11 @@
 const router = require('express').Router()
 const db = require('sqlite')
-
-db.open('expressapi.db').then(() => {
-  return db.run('CREATE TABLE IF NOT EXISTS users (name, email, createdAt, updatedAt)')
-}).then(() => {
-  console.log('> Database ready')
-  }).catch((err) => { // Si on a eu des erreurs
-    console.error('ERR> ', err)
-  })
+const User = require('../models/user.js')
 
 
 /* Users : liste */
 router.post('/', (req, res) => {
-  var date =  new Date();
-  db.run("INSERT INTO users VALUES (?,?, ?, ?)", req.body.name, req.body.email, date, null).then(() => {
+  User.insert(req).then(() => {
     console.log("user "+req.body.name+" inserted");
   })
   console.log(req.body)
@@ -39,13 +31,16 @@ router.get('/', (req, res) => {
 
 });
 router.get('/add', (req, res) => {
-
-  console.log("add");
-  res.render("users/edit");
+  res.format({
+    html: () => {res.render("users/edit")},
+    json: () => {
+      res.status(401);
+      res.send("Bad request");
+    }
+  });
 })
 router.post('/add', (req, res) => {
-  var date =  new Date();
-  db.run("INSERT INTO users VALUES (?,?, ?, ?)", req.body.name, req.body.email, date, null).then(() => {
+  User.insert(req).then(() => {
     res.format({
       html: function(){
         res.redirect("/users")
@@ -59,7 +54,7 @@ router.post('/add', (req, res) => {
   console.log(req.body)
 })
 router.get('/:userid', (req, res) => {
-  db.get("SELECT rowid, * FROM users WHERE rowid = ?", req.params.userid).then((user) => {
+ User.getById(req).then((user) => {
     res.format({
       html: function(){
         res.render("users/show", {user: user});
@@ -75,7 +70,7 @@ router.get('/:userid', (req, res) => {
 })
 
 router.get("/:userid/edit", (req, res) => {
-  db.get("SELECT rowid, * FROM users WHERE rowid = ?", req.params.userid).then((user) => {
+  User.getById(req).then((user) => {
     res.format({
       html: function(){
         res.render("users/edit", {user: user});
@@ -91,9 +86,7 @@ router.get("/:userid/edit", (req, res) => {
 })
 
 router.put('/:userid', (req, res) => {
-  var date =  new Date();
-
-  db.run("UPDATE users SET name = ?, email = ?, updatedAt= ? WHERE rowid = ?",req.body.name, req.body.email, date, req.params.userid).then(() => {
+  User.update(req).then(() => {
     res.format({
       html: function(){
         res.redirect("/users")
@@ -111,7 +104,7 @@ router.put('/:userid', (req, res) => {
   });
 });
 router.delete('/:userid', (req, res) => {
-  db.run("DELETE FROM users WHERE rowid = ?",req.params.userid ).then(() => {
+  User.delete.then(() => {
     res.format({
       html: function(){
         res.redirect("/users")
