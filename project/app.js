@@ -8,6 +8,9 @@ const connect        = require('connect')
 const methodOverride = require('method-override')
 const path = require('path')
 const sass = require('node-sass-middleware')
+const cookieParser = require('cookie-parser')
+
+
 
 db.open('expressapi.db').then(() => {
   Promise.all([
@@ -20,7 +23,7 @@ db.open('expressapi.db').then(() => {
   })
 });
 
-//userId, accessToken, createdAt, expiresAt
+app.use(cookieParser())
 
 // override with POST having ?_method=DELETE
 app.use(methodOverride('_method'))
@@ -46,6 +49,11 @@ app.use(bodyParser.json());
 
 // On sert les fichiers statiques
 app.use(express.static(path.join(__dirname, 'assets')))
+
+app.use(function(req, res, next) {
+	console.log('Cookies: ', req.cookies);
+	next();
+})
 
 // La liste des différents routeurs (dans l'ordre)
 app.use('/', require('./routes/index'))

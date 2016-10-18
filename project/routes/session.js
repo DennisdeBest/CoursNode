@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const db = require('sqlite')
+const cookieParser = require('cookie-parser')
 
 const User = require('../models/user.js')
 const Session = require('../models/session')
@@ -10,8 +11,8 @@ router.get("/",(req,res) => {
 router.post("/", (req, res) => {
 	User.getByEmail(req).then((user) => {
 		Session.insert(user.rowid).then(() => {
+			res.cookie('login', 'OK', { maxAge: 900000, httpOnly: true });
 			res.redirect("/users");
-			//TODO set cookie
 		})
 	}).catch((e) => {
 		console.log(e);
