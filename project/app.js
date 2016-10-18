@@ -51,8 +51,17 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'assets')))
 
 app.use(function(req, res, next) {
-	console.log('Cookies: ', req.cookies);
-	next();
+	if(req.url != "/session"){
+		if(req.cookies.login != "OK"){
+		console.log("not logged")
+		res.redirect("/session")
+	}
+	else {
+		next();
+	}
+	} else {
+		next();
+	}
 })
 
 // La liste des différents routeurs (dans l'ordre)
