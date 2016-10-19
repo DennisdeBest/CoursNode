@@ -12,7 +12,7 @@
 <label for="name">Name : </label>
 </td>
 <td>
-<input value="{{user.name}}" name="name" id="name">
+<input class="name" value="{{user.name}}" name="name" id="name">
 </td>
 </tr>
 <tr>
@@ -20,7 +20,7 @@
 <label for="email">Email : </label>
 </td>
 <td>
-<input value="{{user.email}}" name="email" id="email">
+<input class="email" value="{{user.email}}" name="email" id="email">
 </td>
 </tr>
 <tr>
@@ -28,7 +28,7 @@
 <label for="password">Password : </label>
 </td>
 <td>
-<input type="password" value="" name="password" id="password">
+<input class="password" type="password" value="" name="password" id="password">
 </td>
 </tr>
 <tr>
@@ -36,7 +36,7 @@
 <label for="passwordRepeat">Repeat password : </label>
 </td>
 <td>
-<input type="password" value="" name="passwordRepeat" id="passwordRepeat">
+<input class="passwordRepeat" type="password" value="" name="passwordRepeat" id="passwordRepeat">
 </td>
 </tr>
 <tr>
@@ -46,4 +46,5 @@
 </tr>
 </form>
 </table>
+<script src="/js/accountCreationCheck.js"></script> 
 {% endblock %}
