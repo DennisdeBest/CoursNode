@@ -3,7 +3,6 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const port = process.env.PORT || 8080;
-const API = require('json-api');
 const connect        = require('connect')
 const methodOverride = require('method-override')
 const path = require('path')

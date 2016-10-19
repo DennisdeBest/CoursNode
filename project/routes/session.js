@@ -10,10 +10,15 @@ router.get("/",(req,res) => {
 })
 router.post("/", (req, res) => {
 	User.getByEmail(req).then((user) => {
-		Session.insert(user.rowid).then(() => {
-			res.cookie('login', 'OK', { maxAge: 900000, httpOnly: true });
+		if(req.body.password == user.password){
+			Session.insert(user.rowid).then(() => {
+				res.cookie('login', 'OK', { maxAge: 900000, httpOnly: true });
+				res.redirect("/users");
+			})
+		} else {
 			res.redirect("/users");
-		})
+		}
+
 	}).catch((e) => {
 		console.log(e);
 	})
