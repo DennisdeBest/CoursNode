@@ -13,10 +13,10 @@ const cookieParser = require('cookie-parser')
 
 db.open('expressapi.db').then(() => {
   Promise.all([
-  	 db.run('CREATE TABLE IF NOT EXISTS users (name, email, password, createdAt, updatedAt)'),
-  	 db.run('CREATE TABLE IF NOT EXISTS sessions (userId, accessToken, createdAt, expiresAt)')
-  	]).then(() => {
-  console.log('> Database ready')
+    db.run('CREATE TABLE IF NOT EXISTS users (name, email, password, createdAt, updatedAt)'),
+    db.run('CREATE TABLE IF NOT EXISTS sessions (userId, accessToken, createdAt, expiresAt)')
+    ]).then(() => {
+      console.log('> Database ready')
   }).catch((err) => { // Si on a eu des erreurs
     console.error('ERR> ', err)
   })
@@ -50,17 +50,19 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'assets')))
 
 app.use(function(req, res, next) {
-	if(req.url != "/session"){
-		if(req.cookies.login != "OK"){
-		console.log("not logged")
+  if(req.url == "/users/add"){
+    next();
+  }
+  else if(req.url != "/session"){
+    if(req.cookies.login != "OK"){
 		res.redirect("/session")
 	}
 	else {
 		next();
 	}
-	} else {
-		next();
-	}
+} else {
+  next();
+}
 })
 
 // La liste des différents routeurs (dans l'ordre)
@@ -99,7 +101,7 @@ app.use(function(err, req, res, next) {
     json: () => { res.send(data) }
   })
 })
-	
-	app.listen(port, () => {
-		console.log("Server listening on port : "+ port)
-	})
+
+app.listen(port, () => {
+  console.log("Server listening on port : "+ port)
+})

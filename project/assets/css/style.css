@@ -148,3 +148,11 @@ td.text-right {
 .submit {
   text-align: center;
 }
+
+.inputOk {
+  border: 2px solid green !important;
+}
+
+.inputKo {
+  border: 2px solid red !important;
+}

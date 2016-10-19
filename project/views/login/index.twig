@@ -1,6 +1,6 @@
 {% extends '../index.twig' %}
 {% block content %}
-<h2>Add / Edit</h2>
+<h2>Login</h2>
 <form method="POST" action="session">
 <table class="table-fill">
 <tr>
@@ -8,7 +8,7 @@
 <label for="email">Email : </label>
 </td>
 <td>
-<input value="{{user.email}}" name="email" id="email">
+<input class="email" value="{{user.email}}" name="email" id="email">
 </td>
 </tr>
 <tr>
@@ -16,14 +16,16 @@
 <label for="password">Password : </label>
 </td>
 <td>
-<input type="password" value="" name="password" id="password">
+<input class="password" type="password" value="" name="password" id="password">
 </td>
 </tr>
 <tr>
 <td colspan=2 class="submit">
-<input class="submit" type="submit"/>
+<input class="submit" type="submit" value="Login" name="login"/>
+<input class="submit" type="submit" value="Create account" name="create"/>
 </td>
 </tr>
 </form>
 </table>
+<script src="/js/checkLogin.js"></script>
 {% endblock %}

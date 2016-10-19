@@ -9,7 +9,8 @@ router.get("/",(req,res) => {
 	res.render("login/index");
 })
 router.post("/", (req, res) => {
-	User.getByEmail(req).then((user) => {
+	if(req.body.login){
+			User.getByEmail(req).then((user) => {
 		if(req.body.password == user.password){
 			Session.insert(user.rowid).then(() => {
 				res.cookie('login', 'OK', { maxAge: 900000, httpOnly: true });
@@ -22,5 +23,9 @@ router.post("/", (req, res) => {
 	}).catch((e) => {
 		console.log(e);
 	})
+} else {
+	res.redirect("/users/add");
+}
+
 })
 module.exports = router
