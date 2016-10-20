@@ -34,7 +34,8 @@ $(document).ready(function() {
 			emailCheck = true;
 		} else {
 			$(this).addClass("inputKo");
-			$(this).removeClass("inputoK")
+			$(this).removeClass("inputoK");
+			emailCheck = false;
 		}
 	})
 	$('.password').bind("keyup change", function(){
@@ -45,6 +46,7 @@ $(document).ready(function() {
 		} else {
 			$(this).addClass("inputKo");
 			$(this).removeClass("inputoK")
+			passwordCheck = false;
 		}
 	})
 	$('.passwordRepeat').bind("keyup change", function(){
@@ -55,6 +57,7 @@ $(document).ready(function() {
 		} else {
 			$(this).addClass("inputKo");
 			$(this).removeClass("inputoK")
+			passwordRepeatCheck = false;
 		}
 	})
 	$('.name').bind("keyup change", function(){
@@ -65,6 +68,7 @@ $(document).ready(function() {
 		} else {
 			$(this).addClass("inputKo");
 			$(this).removeClass("inputoK")
+			nameCheck = false;
 		}
 	})
 	$('input').bind("keyup change", function(){
@@ -75,8 +79,6 @@ $(document).ready(function() {
 		if(nameCheck && passwordCheck && passwordRepeatCheck && emailCheck) {
 			console.log("conditions met");
 			$('.submit').attr('disabled', false);
-
 		} 
-
 	})
 })
