@@ -13,7 +13,7 @@ const cookieParser = require('cookie-parser')
 
 db.open('expressapi.db').then(() => {
   Promise.all([
-    db.run('CREATE TABLE IF NOT EXISTS users (name, email, password, createdAt, updatedAt)'),
+    db.run('CREATE TABLE IF NOT EXISTS users (name, email, password, role, createdAt, updatedAt)'),
     db.run('CREATE TABLE IF NOT EXISTS sessions (userId, accessToken, createdAt, expiresAt)')
     ]).then(() => {
       console.log('> Database ready')
@@ -54,7 +54,7 @@ app.use(function(req, res, next) {
     next();
   }
   else if(req.url != "/session"){
-    if(req.cookies.login != "OK"){
+    if(!req.cookies.session){
 		res.redirect("/session")
 	}
 	else {

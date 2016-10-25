@@ -47,7 +47,19 @@ router.post('/add', (req, res) => {
       }, 
       json: function() {
         res.send(user);
-        console.log("json");
+      }
+    });
+  })
+  console.log(req.body)
+})
+router.post('/:userid/promote', (req, res) => {
+  User.promote(req).then(() => {
+    res.format({
+      html: function(){
+        res.redirect("/users")
+      }, 
+      json: function() {
+        res.send(user);
       }
     });
   })
@@ -55,6 +67,8 @@ router.post('/add', (req, res) => {
 })
 router.get('/:userid', (req, res) => {
  User.getById(req).then((user) => {
+  if(!user) return next();
+  
     res.format({
       html: function(){
         res.render("users/show", {user: user});

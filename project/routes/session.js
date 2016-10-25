@@ -9,11 +9,14 @@ router.get("/",(req,res) => {
 	res.render("login/index");
 })
 router.post("/", (req, res) => {
+	console.log(req.body);
 	if(req.body.login){
 			User.getByEmail(req).then((user) => {
+				console.log(user);
 		if(req.body.password == user.password){
-			Session.insert(user.rowid).then(() => {
-				res.cookie('login', 'OK', { maxAge: 900000, httpOnly: true });
+			console.log(req.body.password)
+			Session.insert(user.rowid).then((token) => {
+				res.cookie("session", token, { maxAge: 900000, httpOnly: true });
 				res.redirect("/users");
 			})
 		} else {

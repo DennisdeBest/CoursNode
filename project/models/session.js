@@ -1,5 +1,6 @@
 const db = require('sqlite')
 const crypto = require('crypto')
+const User = require('../models/user.js')
 
 var Session = function () {  
 	this.userId = "";
@@ -10,11 +11,17 @@ var Session = function () {
 
 Session.insert = function(id){
 	return new Promise((resolve, reject) => {
-		var date =  new Date();
+		var date =  new Date()
+		var endDate = date.setHours(1);
 		var token = "";
+
+		//console.log("Date : " + date + " EndDate : " + endDate);
 		
 		generateToken().then((token) => {
-			resolve(db.run("INSERT INTO sessions VALUES (?,?, ?, ?)", id, token, date, date));
+			var token = token;
+			db.run("INSERT INTO sessions VALUES (?,?, ?, ?)", id, token, date, endDate).then(() => {
+				resolve(token);
+			})
 		})
 	})
 	
