@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const db = require('sqlite')
-const User = require('../models/user.js')
+const User = require('../models/user-redis.js')
 
 
 /* Users : liste */
@@ -12,22 +12,12 @@ router.post('/', (req, res) => {
 })
 router.get('/', (req, res) => {
 
-  if(req.query.limit && req.query.offset)
-  {
-    db.each("SELECT rowid, * FROM users LIMIT ? OFFSET ?",req.query.limit, req.query.offset, function(err, row){
-      res.write(row.rowid + " - " + row.name + " - " + row.email+ "\n")
-    }).then(() => {
-      res.end();
-    });
-  }
-  else {
-    db.all("SELECT rowid, * FROM users").then((users) => {
-      res.render('users/index', {users: users})
-    }).catch((err) => {
-      res.status(500).end();
-      console.log(err);
-    })
-  }
+  User.getAll().then((users) => {
+    res.render('users/index', {users: users})
+  }).catch((err) => {
+    res.status(500).end();
+    console.log(err);
+  })
 
 });
 router.get('/add', (req, res) => {
@@ -69,18 +59,18 @@ router.get('/:userid', (req, res) => {
  User.getById(req).then((user) => {
   if(!user) return next();
   
-    res.format({
-      html: function(){
-        res.render("users/show", {user: user});
-      }, 
-      json: function() {
-        res.send(user);
-      }
-    });
-  }).catch((err) => {
-    res.status(500).end();
-    console.log(err);
+  res.format({
+    html: function(){
+      res.render("users/show", {user: user});
+    }, 
+    json: function() {
+      res.send(user);
+    }
   });
+}).catch((err) => {
+  res.status(500).end();
+  console.log(err);
+});
 })
 
 router.get("/:userid/edit", (req, res) => {

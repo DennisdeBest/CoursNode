@@ -49,6 +49,7 @@ app.use(bodyParser.json());
 // On sert les fichiers statiques
 app.use(express.static(path.join(__dirname, 'assets')))
 
+/*
 app.use(function(req, res, next) {
   if(req.url == "/users/add"){
     next();
@@ -64,7 +65,7 @@ app.use(function(req, res, next) {
   next();
 }
 })
-
+*/
 // La liste des différents routeurs (dans l'ordre)
 app.use('/', require('./routes/index'))
 app.use('/users', require('./routes/users'))
