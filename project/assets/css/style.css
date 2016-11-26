@@ -2,7 +2,6 @@ body {
   background-color: #c9cfd8;
   font: 1.2em "Gochi Hand", cursive;
   color: #181819;
-  cursor: url(/img/cursors/png/click-gesture-1.png) 4 12, auto;
 }
 
 h1, h2 {
@@ -69,7 +68,6 @@ input[type="submit"]:disabled, button:disabled {
   border-right: none;
   margin-bottom: 3px;
   text-decoration: line-through;
-  cursor: url(/img/cursors/png/click-gesture-1.png);
 }
 
 .submit {

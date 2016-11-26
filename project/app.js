@@ -13,7 +13,7 @@ const cookieParser = require('cookie-parser')
 
 db.open('expressapi.db').then(() => {
   Promise.all([
-    db.run('CREATE TABLE IF NOT EXISTS users (name, email, password, createdAt, updatedAt)'),
+    db.run('CREATE TABLE IF NOT EXISTS users (name, email, password, role, createdAt, updatedAt)'),
     db.run('CREATE TABLE IF NOT EXISTS sessions (userId, accessToken, createdAt, expiresAt)')
     ]).then(() => {
       console.log('> Database ready')
@@ -48,6 +48,9 @@ app.use(bodyParser.json());
 
 // On sert les fichiers statiques
 app.use(express.static(path.join(__dirname, 'assets')))
+app.use('/jquery', express.static(path.join(__dirname,'node_modules/jquery/dist')));
+app.use('/jquery_awesome_cursor', express.static(path.join(__dirname,'node_modules/jquery-awesome-cursor/dist')));
+
 
 app.use(function(req, res, next) {
   if(req.url == "/users/add"){

@@ -4,7 +4,6 @@ body {
   background-color: $color-primary;
   font: $font-primary;
   color: $color-secondary;
-  cursor: url(/img/cursors/png/click-gesture-1.png) 4 12, auto;
 }
 h1, h2 {
 	text-align: center;
@@ -67,7 +66,6 @@ input[type="submit"]:disabled, button:disabled
     border-right: none;
     margin-bottom: 3px;
     text-decoration: line-through;
-    cursor: url(/img/cursors/png/click-gesture-1.png);
 }
 .submit {
 	text-align: center;

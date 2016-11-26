@@ -10,8 +10,14 @@ $(document).ready(function() {
 	if(email_pattern.test($('.email').val())){
 		$('.email').addClass("inputOk");
 		emailCheck = true;			
+	} else {
+		$('.email').addClass("inputKo");
+		emailCheck = false;	
 	}
 	if(password_pattern.test($('.password').val())) {
+		$('.password').addClass("inputOk");
+		passwordCheck = true;
+	} else {
 		$('.password').addClass("inputOk");
 		passwordCheck = true;
 	}
@@ -27,7 +33,7 @@ $(document).ready(function() {
 			emailCheck = false;
 		}
 	})
-	$('.password').bind("keyup change", function(){
+	$('.password').bind("keydown change", function(){
 		if(password_pattern.test($(this).val())){
 			$(this).addClass("inputOk");
 			$(this).removeClass("inputKo");
@@ -38,7 +44,7 @@ $(document).ready(function() {
 			passwordCheck = false;
 		}
 	})
-	$('input').bind("keyup change", function(){
+	$('input').bind("keydown change", function(){
 		var pass = $('.password').val();
 		var mail = $('.email').val();
 		if(passwordCheck && emailCheck) {

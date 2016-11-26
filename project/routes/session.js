@@ -3,9 +3,11 @@ const db = require('sqlite')
 const cookieParser = require('cookie-parser')
 
 const User = require('../models/user.js')
-const Session = require('../models/session')
+const Session = require('../models/session.js')
+const Logger = require('../models/logger.js')
 
 router.get("/",(req,res) => {
+	Logger.info("something");
 	res.render("login/index");
 })
 router.post("/", (req, res) => {

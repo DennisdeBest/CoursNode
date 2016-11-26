@@ -10,6 +10,8 @@
     "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
     "font-awesome": "^4.6.3",
+    "jquery": "^3.1.1",
+    "jquery-awesome-cursor": "^0.3.1",
     "method-override": "^2.3.6",
     "node-sass-middleware": "^0.9.8",
     "node-twig": "^1.1.0",
