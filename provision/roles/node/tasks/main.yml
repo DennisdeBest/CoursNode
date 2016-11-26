@@ -7,7 +7,7 @@
   become: yes
   with_items: "{{ packages }}"
 
-- name: Install node demon globally
+- name: Install node packages
   become: yes
   npm: name={{ item }} global=yes
   with_items: "{{ node_packages }}"
