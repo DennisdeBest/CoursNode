@@ -1,5 +1,7 @@
 const db = require('sqlite')
 const crypto = require('crypto')
+const Redis = require('ioredis')
+const redis = new Redis()
 
 var Session = function () {  
 	this.userId = "";
@@ -12,12 +14,11 @@ Session.insert = function(id){
 	return new Promise((resolve, reject) => {
 		var date =  new Date();
 		var token = "";
-		
+		let pipeline = redis.pipeline();
 		generateToken().then((token) => {
-			resolve(db.run("INSERT INTO sessions VALUES (?,?, ?, ?)", id, token, date, date));
+			return redis.set(id, token)
 		})
 	})
-	
 }
 
 Session.all = function(){

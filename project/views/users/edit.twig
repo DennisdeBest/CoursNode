@@ -1,63 +1,46 @@
 {% extends '../index.twig' %}
 {% block content %}
-<h2>Add / Edit</h2>
-{% if user %}
-<form method="POST" action="/users/{{user.rowid}}?_method=PUT">
-{% else %}
-<form method="POST" action="/users/add">
-{% endif %}
-<table class="table-fill">
-<tr>
-<td class="label">
-<label for="name">Name : </label>
-</td>
-<td>
-<input type="text" class="name" value="{{user.name}}" name="name" id="name">
-</td>
-</tr>
-<tr>
-<td class="label">
-<label for="email">Email : </label>
-</td>
-<td>
-<input type="text" class="email" value="{{user.email}}" name="email" id="email">
-</td>
-</tr>
-{% if user.role=="admin"}
-<tr>
-<td class="label">
-<label for="role">Role : </label>
-</td>
-<td>
-<select class="role" value="{{user.role}}" name="role" id="role">
-<option value="admin">Admin</option>
-<option value="user">User</option>
-</select>
-</td>
-</tr>
-{% endif %}
-<tr>
-<td class="label">
-<label for="password">Password : </label>
-</td>
-<td>
-<input class="password" type="password" value="" name="password" id="password">
-</td>
-</tr>
-<tr>
-<td class="label">
-<label for="passwordRepeat">Repeat password : </label>
-</td>
-<td>
-<input class="passwordRepeat" type="password" value="" name="passwordRepeat" id="passwordRepeat">
-</td>
-</tr>
-<tr>
-<td colspan=2 class="submit">
-<input class="submit" type="submit"/>
-</td>
-</tr>
-</form>
-</table>
-<script src="/js/accountCreationCheck.js"></script> 
+	<h2>Add / Edit</h2>
+			<form method="POST" action="/users/add">
+			<table class="table-fill">
+				<tr>
+					<td class="label">
+						<label for="name">Name : </label>
+					</td>
+					<td>
+						<input type="text" class="name" value="{{user.name}}" name="name" id="name">
+					</td>
+				</tr>
+				<tr>
+					<td class="label">
+						<label for="email">Email : </label>
+					</td>
+					<td>
+						<input type="text" class="email" value="{{user.email}}" name="email" id="email">
+					</td>
+				</tr>
+			<tr>
+				<td class="label">
+					<label for="password">Password : </label>
+				</td>
+				<td>
+					<input class="password" type="password" value="" name="password" id="password">
+				</td>
+			</tr>
+			<tr>
+				<td class="label">
+					<label for="passwordRepeat">Repeat password : </label>
+				</td>
+				<td>
+					<input class="passwordRepeat" type="password" value="" name="passwordRepeat" id="passwordRepeat">
+				</td>
+			</tr>
+			<tr>
+				<td colspan=2 class="submit">
+					<input class="submit" type="submit"/>
+				</td>
+			</tr>
+		</form>
+	</table>
+	<script src="/js/accountCreationCheck.js"></script> 
 {% endblock %}

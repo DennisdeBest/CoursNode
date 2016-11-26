@@ -1,31 +1,31 @@
 {% extends '../index.twig' %}
 {% block content %}
-<table class="table-fill">
-<thead>
-<tr>
-<th>ID</th>
-<th>Name</th>
-<th>Email</th>
-<th>Actions</th>
-</tr>
-<thead>
-<tbody>
-{% for user in users %}
-<tr>
-<td>
-{{ user.rowid }}
-</td>
-<td>
-<strong>{{user.name}}</strong>
-</td>
-<td>
-{{user.email}}
-</td>
-<td>
-<form class="formButton" method="POST" action="/users/{{user.rowid}}?_method=DELETE"><input type="submit" value="Delete"></form><form class="formButton" method="GET" action="/users/{{user.rowid}}/edit"><input type="submit" value="Edit"></form><br>
-</td>
-</tr>
-{% endfor %}
-</tbody>
-</table>
-{% endblock %}
+	<table class="table-fill">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Email</th>
+				<th>Actions</th>
+			</tr>
+			<thead>
+				<tbody>
+					{% for user in users %}
+						<tr>
+							<td>
+								{{ user.rowid }}
+							</td>
+							<td>
+								<strong>{{user.name}}</strong>
+							</td>
+							<td>
+								{{user.email}}
+							</td>
+							<td>
+								<form class="formButton" method="POST" action="/users/{{user.rowid}}?_method=DELETE"><input type="submit" value="Delete"></form><form class="formButton" method="GET" action="/users/{{user.rowid}}/edit"><input type="submit" value="Edit"></form><br>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% endblock %}

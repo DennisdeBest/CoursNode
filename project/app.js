@@ -8,6 +8,8 @@ const methodOverride = require('method-override')
 const path = require('path')
 const sass = require('node-sass-middleware')
 const cookieParser = require('cookie-parser')
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/Todo');
 
 
 
@@ -51,7 +53,8 @@ app.use(express.static(path.join(__dirname, 'assets')))
 app.use('/jquery', express.static(path.join(__dirname,'node_modules/jquery/dist')));
 app.use('/jquery_awesome_cursor', express.static(path.join(__dirname,'node_modules/jquery-awesome-cursor/dist')));
 
-
+//Auth middleware
+/*
 app.use(function(req, res, next) {
   if(req.url == "/users/add"){
     next();
@@ -67,7 +70,7 @@ app.use(function(req, res, next) {
   next();
 }
 })
-
+*/
 // La liste des différents routeurs (dans l'ordre)
 app.use('/', require('./routes/index'))
 app.use('/users', require('./routes/users'))

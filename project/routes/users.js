@@ -11,24 +11,9 @@ router.post('/', (req, res) => {
   console.log(req.body)
 })
 router.get('/', (req, res) => {
-
-  if(req.query.limit && req.query.offset)
-  {
-    db.each("SELECT rowid, * FROM users LIMIT ? OFFSET ?",req.query.limit, req.query.offset, function(err, row){
-      res.write(row.rowid + " - " + row.name + " - " + row.email+ "\n")
-    }).then(() => {
-      res.end();
-    });
-  }
-  else {
-    db.all("SELECT rowid, * FROM users").then((users) => {
-      res.render('users/index', {users: users})
-    }).catch((err) => {
-      res.status(500).end();
-      console.log(err);
-    })
-  }
-
+  User.getAll().then((users)=> {
+    res.render("users/index", {users: users});
+  });
 });
 router.get('/add', (req, res) => {
   res.format({

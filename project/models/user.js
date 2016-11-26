@@ -1,23 +1,65 @@
 const db = require('sqlite')
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-var User = function () {  
-    this.name = "";
-    this.email = "";
-    this.password = "";
-    this.createdAt = "";
-    this.updatedAt = "";
-}
+var userSchema = new Schema({  
+	name: String,
+	email: String,
+	password: String,
+	createdAt: Date,
+	updatedAt: Date
+})
+
+var User = mongoose.model('User', userSchema)
 
 User.update = function(req) {
-	  var date =  new Date();
-	return db.run("UPDATE users SET name = ?, email = ?, password = ?, updatedAt= ? WHERE rowid = ?",req.body.name, req.body.email, req.body.password, date, req.params.userid);
+	return new Promise((resolve, reject) => {
+		var date =  new Date();
+		User = new User({
+			name: req.body.name,
+			email: req.body.email,
+			password: req.body.password,
+			createdAt: date
+		})
+		User.save(function(err){
+			if(err){
+				reject(err);
+			}
+			resolve(true);
+		})
+	}) 
 }
 
 User.insert = function(req) {
-	  var date =  new Date();
-	return db.run("INSERT INTO users VALUES (?,?, ?, ?, ?)", req.body.name, req.body.email, req.body.password, date, null);
+	return new Promise((resolve, reject) => {
+		var date =  new Date();
+		User = new User({
+			name: req.body.name,
+			email: req.body.email,
+			password: req.body.password,
+			createdAt: date
+		})
+		User.save(function(err){
+			if(err){
+				reject(err);
+			}
+			resolve(true);
+		})
+	}) 
+}
+User.getAll = function(){
+	return new Promise((resolve, reject) => {
+		User.find({}, function(err, users) {
+			if (err){
+				reject(err);
+			}
+		console.log(users); 
+  		resolve(users);
+		});
+	});
 }
 User.delete = function(req) {
+
 	return db.run("DELETE FROM users WHERE rowid = ?",req.params.userid)
 }
 
@@ -26,32 +68,32 @@ User.getById = function(req) {
 }
 User.getByName = function(req) {
 	return new Promise((resolve, reject) => {
-	db.get("SELECT rowid, * FROM users WHERE name = ?", req.body.name).then((user) => { 
-	 	if(user){
-	 		resolve(user);
-	 	}
-	 	else {
-	 		resolve(false);
-	 	}
-	 }).catch((e) => {
-	 	reject(e);
-	 })
+		db.get("SELECT rowid, * FROM users WHERE name = ?", req.body.name).then((user) => { 
+			if(user){
+				resolve(user);
+			}
+			else {
+				resolve(false);
+			}
+		}).catch((e) => {
+			reject(e);
+		})
 
 	})
 
 }
 User.getByEmail = function(req) {
 	return new Promise((resolve, reject) => {
-	db.get("SELECT rowid, * FROM users WHERE email = ?", req.body.email).then((user) => { 
-	 	if(user){
-	 		resolve(user);
-	 	}
-	 	else {
-	 		resolve(false);
-	 	}
-	 }).catch((e) => {
-	 	reject(e);
-	 })
+		db.get("SELECT rowid, * FROM users WHERE email = ?", req.body.email).then((user) => { 
+			if(user){
+				resolve(user);
+			}
+			else {
+				resolve(false);
+			}
+		}).catch((e) => {
+			reject(e);
+		})
 
 	})
 
