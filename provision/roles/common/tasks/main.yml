@@ -4,4 +4,19 @@
   apt: name="{{ item }}" state="latest" update_cache=yes
   become: yes
   with_items: "{{ packages }}"
+
+- name: Add dotDeb repository
+  apt_repository: repo={{ item }} state=present
+  become: yes
+  with_items:
+    - deb http://packages.dotdeb.org jessie all
+    - deb-src http://packages.dotdeb.org jessie all
+
+- name: Add dotdeb repository key
+  become: yes
+  apt_key: url="https://www.dotdeb.org/dotdeb.gpg"
+
+- name: Update apt update
+  become: yes
+  apt: update_cache=yes
 ...

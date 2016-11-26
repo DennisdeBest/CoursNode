@@ -1,0 +1,9 @@
+---
+
+- name: Add mongo DB repo
+  shell: echo "deb http://repo.mongodb.org/apt/debian jessie/mongodb-org/3.2 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
+
+- name: install mongoDB
+  apt: name="mongodb-org" state="latest" update_cache=yes force="yes"
+  become: yes
+...

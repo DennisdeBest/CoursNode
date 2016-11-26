@@ -8,8 +8,8 @@
 
   roles:
     - common
-    - role: DavidWittman.redis
-      become: yes
+    - redis
+    - mongoDB
     - role: gantsign.oh-my-zsh
       users:
         - username: vagrant
