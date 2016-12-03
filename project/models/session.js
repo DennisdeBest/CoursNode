@@ -11,13 +11,22 @@ var Session = function () {
 }
 
 Session.insert = function(id){
+	console.log("redis insert");
 	return new Promise((resolve, reject) => {
 		var date =  new Date();
 		var token = "";
 		let pipeline = redis.pipeline();
 		generateToken().then((token) => {
-			return redis.set(id, token)
+			console.log("id "+id+" token "+token);
+			redis.set(id, token).then(() => {
+				resolve({id:id, token:token})
+			})
 		})
+	})
+}
+Session.getToken = function(id){
+	return new Promise((resolve, reject) => {
+		resolve(redis.get(id));
 	})
 }
 

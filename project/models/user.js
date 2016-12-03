@@ -59,42 +59,49 @@ User.getAll = function(){
 	});
 }
 User.delete = function(req) {
-
-	return db.run("DELETE FROM users WHERE rowid = ?",req.params.userid)
+	return new Promise((resolve, reject) => {
+		User.findOneAndRemove({ id: req.body.id}, function (err) {
+			if(err){
+				reject(err);
+			}
+			console.log('User deleted!');
+			resolve(req.body.id);
+		})
+	})
 }
 
 User.getById = function(req) {
-	return db.get("SELECT rowid, * FROM users WHERE rowid = ?", req.params.userid)
+return new Promise((resolve, reject) => {
+		User.find({ id: req.body.id}, function(err, user){
+			if(err) {
+				reject(err);
+			}
+			console.log('User deleted!');
+			resolve(user);
+		})
+	})
 }
 User.getByName = function(req) {
-	return new Promise((resolve, reject) => {
-		db.get("SELECT rowid, * FROM users WHERE name = ?", req.body.name).then((user) => { 
-			if(user){
-				resolve(user);
+return new Promise((resolve, reject) => {
+		User.find({ name: req.body.name}, function(err, user){
+			if(err) {
+				reject(err);
 			}
-			else {
-				resolve(false);
-			}
-		}).catch((e) => {
-			reject(e);
+			console.log(user);
+			resolve(user);
 		})
-
 	})
 
 }
 User.getByEmail = function(req) {
 	return new Promise((resolve, reject) => {
-		db.get("SELECT rowid, * FROM users WHERE email = ?", req.body.email).then((user) => { 
-			if(user){
-				resolve(user);
+		User.find({ email: req.body.email}, function(err, user){
+			if(err) {
+				reject(err);
 			}
-			else {
-				resolve(false);
-			}
-		}).catch((e) => {
-			reject(e);
+			console.log(user);
+			resolve(user);
 		})
-
 	})
 
 }

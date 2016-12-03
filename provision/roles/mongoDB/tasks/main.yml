@@ -6,4 +6,12 @@
 - name: install mongoDB
   apt: name="mongodb-org" state="latest" update_cache=yes force="yes"
   become: yes
+
+- name: export locale
+  lineinfile: dest=/etc/default/locale line="LC_ALL="en_US.UTF-8""
+  become: yes
+
+- name: create mongoDb directory
+  file: path=/data/db state=directory mode=0777
+  become: yes
 ...

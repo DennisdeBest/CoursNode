@@ -1,4 +1,3 @@
-const db = require('sqlite')
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
@@ -9,20 +8,8 @@ const path = require('path')
 const sass = require('node-sass-middleware')
 const cookieParser = require('cookie-parser')
 const mongoose = require('mongoose');
+const Session = require('./models/session.js')
 mongoose.connect('mongodb://localhost:27017/Todo');
-
-
-
-db.open('expressapi.db').then(() => {
-  Promise.all([
-    db.run('CREATE TABLE IF NOT EXISTS users (name, email, password, role, createdAt, updatedAt)'),
-    db.run('CREATE TABLE IF NOT EXISTS sessions (userId, accessToken, createdAt, expiresAt)')
-    ]).then(() => {
-      console.log('> Database ready')
-  }).catch((err) => { // Si on a eu des erreurs
-    console.error('ERR> ', err)
-  })
-});
 
 app.use(cookieParser())
 
@@ -54,23 +41,23 @@ app.use('/jquery', express.static(path.join(__dirname,'node_modules/jquery/dist'
 app.use('/jquery_awesome_cursor', express.static(path.join(__dirname,'node_modules/jquery-awesome-cursor/dist')));
 
 //Auth middleware
-/*
 app.use(function(req, res, next) {
-  if(req.url == "/users/add"){
+  if(req.cookies.AccessToken){
+      Session.getToken(req.cookies.AccessToken.id).then((token) => {
+       if(req.cookies.AccessToken.token == token){
+        next();
+       }
+     })
+    } 
+  else if(req.url == "/users/add" || req.url == "/session"){
     next();
   }
-  else if(req.url != "/session"){
-    if(req.cookies.login != "OK"){
-		res.redirect("/session")
-	}
-	else {
-		next();
-	}
-} else {
-  next();
-}
+  else {
+    res.redirect("/session");  
+  }
+  
 })
-*/
+
 // La liste des différents routeurs (dans l'ordre)
 app.use('/', require('./routes/index'))
 app.use('/users', require('./routes/users'))
