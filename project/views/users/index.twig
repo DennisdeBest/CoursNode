@@ -13,7 +13,7 @@
 					{% for user in users %}
 						<tr>
 							<td>
-								{{ user.rowid }}
+								{{ user._id }}
 							</td>
 							<td>
 								<strong>{{user.name}}</strong>
@@ -22,7 +22,7 @@
 								{{user.email}}
 							</td>
 							<td>
-								<form class="formButton" method="POST" action="/users/{{user.rowid}}?_method=DELETE"><input type="submit" value="Delete"></form><form class="formButton" method="GET" action="/users/{{user.rowid}}/edit"><input type="submit" value="Edit"></form><br>
+								<form class="formButton" method="POST" action="/users/{{user._id}}?_method=DELETE"><input type="submit" value="Delete"></form><form class="formButton" method="GET" action="/users/{{user._id}}/edit"><input type="submit" value="Edit"></form><br>
 							</td>
 						</tr>
 					{% endfor %}

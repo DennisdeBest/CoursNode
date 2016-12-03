@@ -30,10 +30,6 @@ Session.getToken = function(id){
 	})
 }
 
-Session.all = function(){
-	return db.all("SELECT * FROM sessions");
-}
-
 var generateToken = function() {
 	return new Promise((resolve, reject) => {
 		crypto.randomBytes(48, function(err, buffer) {

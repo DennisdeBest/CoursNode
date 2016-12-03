@@ -1,7 +1,12 @@
 {% extends '../index.twig' %}
 {% block content %}
 	<h2>Add / Edit</h2>
-			<form method="POST" action="/users/add">
+	{% if user is defined %}
+<form method="POST" action="/users/{{user._id}}?_method=PUT">
+	{% else %}
+<form method="POST" action="/users/add">
+	{% endif %}
+			
 			<table class="table-fill">
 				<tr>
 					<td class="label">
@@ -33,6 +38,7 @@
 				</td>
 				<td>
 					<input class="passwordRepeat" type="password" value="" name="passwordRepeat" id="passwordRepeat">
+					<input type="hidden" name="userid" value="{{user._id}}" id="userid">
 				</td>
 			</tr>
 			<tr>

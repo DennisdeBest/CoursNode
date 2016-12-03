@@ -1,4 +1,3 @@
-const db = require('sqlite')
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
@@ -12,22 +11,30 @@ var userSchema = new Schema({
 
 var User = mongoose.model('User', userSchema)
 
-User.update = function(req) {
+User.update = function(req, id) {
 	return new Promise((resolve, reject) => {
-		var date =  new Date();
-		User = new User({
-			name: req.body.name,
-			email: req.body.email,
-			password: req.body.password,
-			createdAt: date
-		})
-		User.save(function(err){
+		console.log("UPDATE");
+		console.log(id)
+		User.findById(id, function(err, user){
 			if(err){
 				reject(err);
 			}
+			console.log(user);
+			var date =  new Date();
+			user.name = req.body.name;
+			user.email = req.body.email;
+			user.password = req.body.password;
+			user.updatedAt = date;
+
+			user.save(function(err){
+			if(err){
+				reject(err);
+			} else {
 			resolve(true);
-		})
+			}
+		})		
 	}) 
+})
 }
 
 User.insert = function(req) {
@@ -60,7 +67,7 @@ User.getAll = function(){
 }
 User.delete = function(req) {
 	return new Promise((resolve, reject) => {
-		User.findOneAndRemove({ id: req.body.id}, function (err) {
+		User.findOneAndRemove({id:req.body.id}, function (err) {
 			if(err){
 				reject(err);
 			}
@@ -70,9 +77,9 @@ User.delete = function(req) {
 	})
 }
 
-User.getById = function(req) {
+User.getById = function(id) {
 return new Promise((resolve, reject) => {
-		User.find({ id: req.body.id}, function(err, user){
+		User.find({_id:id}, function(err, user){
 			if(err) {
 				reject(err);
 			}
@@ -83,7 +90,7 @@ return new Promise((resolve, reject) => {
 }
 User.getByName = function(req) {
 return new Promise((resolve, reject) => {
-		User.find({ name: req.body.name}, function(err, user){
+		User.find({name:req.body.name}, function(err, user){
 			if(err) {
 				reject(err);
 			}
@@ -95,7 +102,7 @@ return new Promise((resolve, reject) => {
 }
 User.getByEmail = function(req) {
 	return new Promise((resolve, reject) => {
-		User.find({ email: req.body.email}, function(err, user){
+		User.find({email:req.body.email}, function(err, user){
 			if(err) {
 				reject(err);
 			}

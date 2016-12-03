@@ -55,10 +55,11 @@ router.get('/:userid', (req, res) => {
 })
 
 router.get("/:userid/edit", (req, res) => {
-  User.getById(req).then((user) => {
+  console.log(req.params)
+  User.getById(req.params.userid).then((user) => {
     res.format({
       html: function(){
-        res.render("users/edit", {user: user});
+        res.render("users/edit", {user: user[0]});
       }, 
       json: function() {
         res.send(user);
@@ -71,7 +72,7 @@ router.get("/:userid/edit", (req, res) => {
 })
 
 router.put('/:userid', (req, res) => {
-  User.update(req).then(() => {
+  User.update(req, req.body.userid).then(() => {
     res.format({
       html: function(){
         res.redirect("/users")

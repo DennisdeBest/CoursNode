@@ -1,1 +1,37 @@
-index.twig
+{% extends '../index.twig' %}
+{% block content %}
+<table class="table-fill">
+	<thead>
+		<tr>
+			<th>Message</th>
+			<th>Team</th>
+			<th>Status</th>
+			<th>Priorite</th>
+			<th>Action</th>
+		</tr>
+		<thead>
+			<tbody>
+				{% for todo in todos %}
+				<tr>
+					<td>
+						{{todo.message}}
+					</td>
+					<td>
+						{{todo.team}}
+					</td>
+					<td>
+						{{todo.status}}
+					</td>
+					<td>
+						{{todo.priorite}}
+					</td>
+					<td>
+						<form class="formButton" method="POST" action="/todo/{{todo.rowid}}?_method=DELETE"><input type="submit" value="Delete"></form><form class="formButton" method="GET" action="/todo/{{todo.rowid}}/edit">
+						<!-- <input type="hidden" name="status" value=""> -->
+						<input type="submit" value="Edit"></form><br>
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		{% endblock %}
