@@ -1,18 +1,5 @@
 const router = require('express').Router()
-const db = require('sqlite')
 const Todo = require('../models/todo.js')
-
-router.get('/', function(req, res, next) {
-    db.all("SELECT rowid, * FROM todo").then((todos) => {
-      res.format({
-        html: () => {res.render("todo/index", {todos: todos})},
-        json: () => {
-          res.status(401);
-          res.send("Bad request");
-        }
-      })
-    }).catch(next)
-})
 
 router.get('/add', (req, res) => {
   res.format({
@@ -25,8 +12,11 @@ router.get('/add', (req, res) => {
 })
 
 router.post('/', function(req, res) {
+  //get user id from cookie
+    var id = req.cookies.AccessToken.id;
+    console.log(req.cookies.AccessToken)
     if (req.body.message != '') {
-        Todo.insert(req).then(() => {
+        Todo.insert(req, id).then(() => {
         	res.format({
 		      html: function(){
 		        res.redirect("/todo")
@@ -40,11 +30,11 @@ router.post('/', function(req, res) {
     }
 })
 
-router.get('/', (req, res) => {
- Todo.getById(req).then((todos) => {
+router.get('/', (req, res, next) => {
+ Todo.getAll(req).then((todos) => {
     res.format({
       html: function(){
-        res.render("/todo", {todo: todo});
+        res.render("todo/index", {todos: todos});
       }, 
       json: function() {
         res.send(todo);
@@ -57,7 +47,7 @@ router.delete('/:userid', (req, res) => {
   Todo.delete(req).then(() => {
     res.format({
       html: function(){
-        res.redirect("/todo")
+        res.redirect("todo/index")
       }, 
       json: function() {
         var response = JSON.stringify({
@@ -72,8 +62,10 @@ router.delete('/:userid', (req, res) => {
   });
 })
 
-router.get("/:userid/edit", (req, res) => {
-  Todo.getById(req).then((todo) => {
+router.get("/:todoid/edit", (req, res) => {
+  console.log(req.params)
+  Todo.getById(req.params.todoid).then((todo) => {
+    console.log(todo);
     res.format({
       html: function(){
         res.render("todo/edit", {todo: todo});

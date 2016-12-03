@@ -26,7 +26,7 @@
 						{{todo.priorite}}
 					</td>
 					<td>
-						<form class="formButton" method="POST" action="/todo/{{todo.rowid}}?_method=DELETE"><input type="submit" value="Delete"></form><form class="formButton" method="GET" action="/todo/{{todo.rowid}}/edit">
+						<form class="formButton" method="POST" action="/todo/{{todo._id}}?_method=DELETE"><input type="submit" value="Delete"></form><form class="formButton" method="GET" action="/todo/{{todo._id}}/edit">
 						<!-- <input type="hidden" name="status" value=""> -->
 						<input type="submit" value="Edit"></form><br>
 					</td>

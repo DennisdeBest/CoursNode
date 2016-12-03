@@ -12,8 +12,8 @@ var todoSchema = new Schema({
 })
 
 var Todo = mongoose.model('Todo', todoSchema)
-
-Todo.update = function(req,id) {
+ 
+Todo.update = function(req, id) {
     return new Promise((resolve, reject) => {
         var date =  new Date();
         Todo = new Todo({
@@ -33,8 +33,9 @@ Todo.update = function(req,id) {
     }) 
 }
 
-Todo.Insert = function(req,id) {
+Todo.insert = function(req, id) {
     return new Promise((resolve, reject) => {
+        console.log(id);
         var date =  new Date();
         Todo = new Todo({
             userId: id,
@@ -66,20 +67,31 @@ Todo.Insert = function(req,id) {
                 if(err){
                     reject(err);
                 }
-                console.log('User deleted!');
+                console.log('Todo deleted!');
                 resolve(req.body.id);
             })
         })
     }
 
-    Todo.getById = function(req) {
+    Todo.getById = function(id) {
+        console.log("Todo id "+ id)
         return new Promise((resolve, reject) => {
-            Todo.find({id:req.body.id}, function(err, user){
+            Todo.find({_id:id}, function(err, todo){
                 if(err) {
                     reject(err);
                 }
-                console.log('User deleted!');
-                resolve(user);
+                console.log(todo);
+                resolve(todo[0]);
+            })
+        })
+    }
+    Todo.getAll = function() {
+        return new Promise((resolve, reject) => {
+            Todo.find('*', function(err, todos){
+                if(err) {
+                    reject(err);
+                }
+                resolve(todos);
             })
         })
     }

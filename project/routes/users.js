@@ -55,7 +55,6 @@ router.get('/:userid', (req, res) => {
 })
 
 router.get("/:userid/edit", (req, res) => {
-  console.log(req.params)
   User.getById(req.params.userid).then((user) => {
     res.format({
       html: function(){
