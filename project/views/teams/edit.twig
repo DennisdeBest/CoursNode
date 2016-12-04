@@ -1,0 +1,27 @@
+{% extends '../index.twig' %}
+{% block content %}
+	<h2>Add</h2>
+	{% if team is defined %}
+<form method="POST" action="/teams/{{team._id}}?_method=PUT">
+	{% else %}
+<form method="POST" action="/teams">
+	{% endif %}
+			
+			<table class="table-fill">
+				<tr>
+					<td class="label">
+						<label for="name">Name : </label>
+					</td>
+					<td>
+						<input type="text" class="name" value="{{team.name}}" name="name" id="name">
+					</td>
+				</tr>
+			<tr>
+				<td colspan=2 class="submit">
+					<input type="hidden" name="teamid" id="teamid" value="{{team._id}}">
+					<input class="submit" type="submit"/>
+				</td>
+			</tr>
+		</form>
+	</table>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends '../index.twig' %}
+{% block content %}
+	<table class="table-fill teamTable">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Actions</th>
+			</tr>
+			<thead>
+				<tbody>
+					{% for team in teams %}
+						<tr>
+							<td>
+								<strong>{{team.name}}</strong>
+							</td>
+							<td>
+								<form class="formButton" method="POST" action="/teams/{{team._id}}?_method=DELETE"><input type="submit" value="Delete"></form><form class="formButton" method="GET" action="/teams/{{team._id}}/edit"><input type="submit" value="Edit"></form><br>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% endblock %}

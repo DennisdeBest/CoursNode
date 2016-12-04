@@ -1,6 +1,6 @@
 const router = require('express').Router()
 
-/* Page d'accueil */
+/* Twig main template */
 router.get('/', function(req, res, next) {
   res.render('index')
 })

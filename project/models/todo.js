@@ -62,55 +62,45 @@ Todo.insert = function(req, id) {
         })
     }) 
 }
-    /*console.log(req.body.status)
-    if (req.body.status == 0) {
-        var status = 1
-    } else {
-        var status = 0
-    }
-    console.log(status)*/
+Todo.delete = function(id) {
+    return new Promise((resolve, reject) => {
+        Todo.findOneAndRemove({_id:id}, function (err) {
+            if(err){
+                reject(err);
+            }
+            resolve(true);
+        })
+    })
+}
 
-    Todo.delete = function(id) {
-        return new Promise((resolve, reject) => {
-            Todo.findOneAndRemove({_id:id}, function (err) {
-                if(err){
-                    reject(err);
-                }
-                resolve(true);
-            })
+Todo.getById = function(id) {
+    return new Promise((resolve, reject) => {
+        Todo.find({_id:id}, function(err, todo){
+            if(err) {
+                reject(err);
+            }
+            resolve(todo[0]);
         })
-    }
-
-    Todo.getById = function(id) {
-        return new Promise((resolve, reject) => {
-            Todo.find({_id:id}, function(err, todo){
-                if(err) {
-                    reject(err);
-                }
-                resolve(todo[0]);
-            })
+    })
+}
+Todo.getAll = function() {
+    return new Promise((resolve, reject) => {
+        Todo.find({}, function(err, todos){
+            if(err) {
+                reject(err);
+            }
+            resolve(todos);
         })
-    }
-    Todo.getAll = function() {
-        return new Promise((resolve, reject) => {
-            Todo.find({}, function(err, todos){
-                if(err) {
-                    reject(err);
-                }
-                resolve(todos);
-            })
+    })
+}
+Todo.getAllForUser = function(id) {
+    return new Promise((resolve, reject) => {
+        Todo.find({userId:id}, function(err, todos){
+            if(err) {
+                reject(err);
+            }
+            resolve(todos);
         })
-    }
-    Todo.getAllForUser = function(id) {
-        console.log("getAllForUser : "+ id);
-        console.log(id);
-        return new Promise((resolve, reject) => {
-            Todo.find({userId:id}, function(err, todos){
-                if(err) {
-                    reject(err);
-                }
-                resolve(todos);
-            })
-        })
-    }
-    module.exports = Todo;
+    })
+}
+module.exports = Todo;

@@ -20,6 +20,7 @@ app.use(methodOverride('_method'))
 app.set('views', __dirname + '/views');
 app.set('view engine', 'twig');
 
+//Set the Sass folders
 app.use(sass({
   src: path.join(__dirname, 'styles'),
   dest: path.join(__dirname, 'assets', 'css'),
@@ -35,7 +36,7 @@ app.set('twig options', {
 app.use(bodyParser.urlencoded({ extended:true }));
 app.use(bodyParser.json());
 
-// On sert les fichiers statiques
+// Static files
 app.use(express.static(path.join(__dirname, 'assets')))
 app.use('/jquery', express.static(path.join(__dirname,'node_modules/jquery/dist')));
 app.use('/jquery_awesome_cursor', express.static(path.join(__dirname,'node_modules/jquery-awesome-cursor/dist')));
@@ -43,52 +44,54 @@ app.use('/jquery_awesome_cursor', express.static(path.join(__dirname,'node_modul
 //Auth middleware
 app.use(function(req, res, next) {
   if(req.cookies.AccessToken){
-      Session.getToken(req.cookies.AccessToken.id).then((token) => {
-       if(req.cookies.AccessToken.token == token){
-        next();
-       }
-     })
-    } 
-  else if(req.url == "/users/add" || req.url == "/session"){
-    next();
-  }
+    Session.getToken(req.cookies.AccessToken.id).then((token) => {
+     if(req.cookies.AccessToken.token == token){
+      next();
+    }
+  })
+  } 
+    //Whitelist some URLs
+    else if(req.url == "/users/add" || req.url == "/session" || req.url == "/session/logout"){
+      next();
+    }
+  //Redirect to login page
   else {
     res.redirect("/session");  
   }
   
 })
 
-// La liste des différents routeurs (dans l'ordre)
+// Routers
 app.use('/', require('./routes/index'))
 app.use('/users', require('./routes/users'))
 app.use('/todo', require('./routes/todo'))
+app.use('/teams', require('./routes/team'))
 app.use('/session', require('./routes/session'))
 
-// Erreur 404
+// 404
 app.use(function(req, res, next) {
   let err = new Error('Not Found')
   err.status = 404
   next(err)
 })
 
-// Gestion des erreurs
-// Notez les 4 arguments !!
+// Error Handling
 app.use(function(err, req, res, next) {
-  // Les données de l'erreur
+  // Error data
   let data = {
     message: err.message,
     status: err.status || 500
   }
 
-  // En mode développement, on peut afficher les détails de l'erreur
+  // Display error stack in dev env
   if (app.get('env') === 'development') {
     data.error = err.stack
   }
 
-  // On set le status de la réponse
+  // Serve error response code
   res.status(data.status)
 
-  // Réponse multi-format
+  // Multi-format
   res.format({
     html: () => { res.render('error', data) },
     json: () => { res.send(data) }

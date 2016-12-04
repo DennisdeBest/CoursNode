@@ -3,7 +3,6 @@ const User = require('../models/user.js')
 
 
 router.get('/', (req, res) => {
-  console.log("In the redirect route");
   User.getAll().then((users)=> {
     res.render("users/index", {users: users});
   });
@@ -22,32 +21,26 @@ router.post('/', (req, res) => {
   User.insert(req).then(() => {
     res.format({
       html: function(){
-        res.redirect("/users")
+        res.redirect("/todo")
       }, 
       json: function() {
         res.send(user);
-        console.log("json");
       }
     });
   })
-  console.log(req.body)
 })
 
 router.post('/add', (req, res) => {
-  console.log("POST user")
   User.insert(req).then(() => {
     res.format({
       html: function(){
-        console.log("ResRedirect")
         res.redirect("/users")
       }, 
       json: function() {
         res.send(user);
-        console.log("json");
       }
     });
   })
-  console.log(req.body)
 })
 
 router.get('/:userid', (req, res) => {
@@ -62,7 +55,6 @@ router.get('/:userid', (req, res) => {
     });
   }).catch((err) => {
     res.status(500).end();
-    console.log(err);
   });
 })
 
@@ -78,7 +70,6 @@ router.get("/:userid/edit", (req, res) => {
     });
   }).catch((err) => {
     res.status(500).end();
-    console.log(err);
   });
 })
 
@@ -97,7 +88,6 @@ router.put('/:userid', (req, res) => {
     });
   }).catch((err) => {
     res.status(500).end();
-    console.log(err);
   });
 });
 router.delete('/:userid', (req, res) => {
@@ -115,7 +105,6 @@ router.delete('/:userid', (req, res) => {
     });
   }).catch((err) => {
     res.status(500).end();
-    console.log(err);
   });
 });
 

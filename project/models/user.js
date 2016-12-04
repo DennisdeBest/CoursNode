@@ -13,13 +13,10 @@ var User = mongoose.model('User', userSchema)
 
 User.update = function(req, id) {
 	return new Promise((resolve, reject) => {
-		console.log("UPDATE");
-		console.log(id)
 		User.findById(id, function(err, user){
 			if(err){
 				reject(err);
 			}
-			console.log(user);
 			var date =  new Date();
 			user.name = req.body.name;
 			user.email = req.body.email;
@@ -56,10 +53,7 @@ User.insert = function(req) {
 }
 User.getAll = function(){
 	return new Promise((resolve, reject) => {
-		console.log("USERS get aLL");
 		User.find({}, function(err, users) {
-			console.log(err);
-			console.log(users);
 			if (err){
 				reject(err);
 			} 
@@ -68,13 +62,11 @@ User.getAll = function(){
 	});
 }
 User.delete = function(id) {
-	console.log("User id" + id);
 	return new Promise((resolve, reject) => {
 		User.findOneAndRemove({_id:id}, function (err) {
 			if(err){
 				reject(err);
 			}
-			console.log('User deleted!');
 			resolve(true);
 		})
 	})
@@ -96,7 +88,6 @@ return new Promise((resolve, reject) => {
 			if(err) {
 				reject(err);
 			}
-			console.log(user);
 			resolve(user);
 		})
 	})
@@ -104,12 +95,10 @@ return new Promise((resolve, reject) => {
 }
 User.getByEmail = function(req) {
 	return new Promise((resolve, reject) => {
-		console.log("Get by email");
 		User.find({email:req.body.email}, function(err, user){
 			if(err) {
 				reject(err);
 			}
-			console.log(user);
 			resolve(user);
 		})
 	})
