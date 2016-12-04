@@ -74,7 +74,6 @@ router.get("/:teamid/edit", (req, res) => {
 })
 
 router.put('/:teamid', (req, res) => {
-	console.log(req.body)
 	Team.update(req, req.body.teamid).then(() => {
 		res.format({
 			html: function(){
