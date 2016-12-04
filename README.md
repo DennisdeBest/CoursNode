@@ -45,8 +45,10 @@ A la création ou la modification d'une tâche une liste avec les équipes prés
 ###Les tâches (Todos)
 
 Comme pour les utilisateurs et les équipes les tâches peuvent être gèré par l'API ou le site.
-Chaque tâche contient un utilisateur, une priorité (1-5), une équipe et un status (0 par défaut pour une tâche pas encore terminée, 1 quand la tâche est terminée).
+Chaque tâche contient un utilisateur (celui qui l'as créé), une priorité (1-5), une équipe et un status (0 par défaut pour une tâche pas encore terminée, 1 quand la tâche est terminée).
 Nous pouvons rapidement identifier les tâches terminées dans la liste car ils ont une couleur plus proche de l'arrière plan et ils sont également barrées.
+
+Une fois connecté, un utilisateur sera redirigé sur la liste des tâches qu'il a créé.
 
 ###Fonctionnement
 
