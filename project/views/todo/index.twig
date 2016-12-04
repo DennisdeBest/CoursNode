@@ -5,22 +5,18 @@
 		<tr>
 			<th>Message</th>
 			<th>Team</th>
-			<th>Status</th>
 			<th>Priorite</th>
 			<th>Action</th>
 		</tr>
 		<thead>
 			<tbody>
 				{% for todo in todos %}
-				<tr>
+				<tr {% if (todo.status == 1) %} class="done" {% endif %}>
 					<td>
 						{{todo.message}}
 					</td>
 					<td>
 						{{todo.team}}
-					</td>
-					<td>
-						{{todo.status}}
 					</td>
 					<td>
 						{{todo.priorite}}

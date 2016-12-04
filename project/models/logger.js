@@ -6,8 +6,8 @@ var logger = function(){
 }
 
 logger.info = function(message){
-		console.log(this.dir);
-		console.log(message);
+		//console.log(this.dir);
+		//console.log(message);
 }
 
 module.exports = logger;

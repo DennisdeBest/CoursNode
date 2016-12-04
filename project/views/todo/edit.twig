@@ -24,7 +24,7 @@
 					<label for="status">Status : </label>
 				</td>
 				<td>
-					<input type="checkbox" class="status" {% if todo.status == 1 %} checkbox = "checked" value = "1" {% else %}{% endif %} name="status" id="status">
+					<input type="checkbox" class="status" {% if todo.status == 1 %} checked="checked" {% else %}{% endif %} name="status" id="status">
 				</td>
 			</tr>
 			<tr>
@@ -37,6 +37,7 @@
 			</tr>
 			<tr>
 				<td colspan=2 class="submit">
+					<input type="hidden" name="todoid" id="todoid" value="{{todo._id}}">
 					<input class="submit" type="submit"/>
 				</td>
 			</tr>

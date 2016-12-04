@@ -1,6 +1,9 @@
 {% extends '../index.twig' %}
 {% block content %}
 <h2>Login</h2>
+{% if err is defined %}
+	<h3>{{err}}</h3>
+{% endif %}
 <form method="POST" action="session">
 <table class="table-fill">
 <tr>

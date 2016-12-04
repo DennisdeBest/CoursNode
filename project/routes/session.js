@@ -14,12 +14,16 @@ router.get("/",(req,res) => {
 router.post("/", (req, res, next) => {
 	if(req.body.login){
 		User.getByEmail(req).then((user) => {
-			if(req.body.password == user[0].password){
+			console.log(user);
+			if(user.length > 0 && req.body.password == user[0].password){
 				console.log("password correct");
 				Session.insert(user[0]._id).then((info) => {
 					res.cookie("AccessToken", {id:info.id, token:info.token}, { maxAge: 900000, httpOnly: true });
 					res.redirect("/users");
 				})
+			}
+			else {
+				res.render("login/index", {err:"Login incorrect"})
 			}
 		}).catch((e) => {
 			console.log(e);

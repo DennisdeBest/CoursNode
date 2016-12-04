@@ -14,7 +14,6 @@ router.get('/add', (req, res) => {
 router.post('/', function(req, res) {
   //get user id from cookie
     var id = req.cookies.AccessToken.id;
-    console.log(req.cookies.AccessToken)
     if (req.body.message != '') {
         Todo.insert(req, id).then(() => {
         	res.format({
@@ -31,7 +30,8 @@ router.post('/', function(req, res) {
 })
 
 router.get('/', (req, res, next) => {
- Todo.getAll(req).then((todos) => {
+  var id = req.cookies.AccessToken.id;
+ Todo.getAllForUser(id).then((todos) => {
     res.format({
       html: function(){
         res.render("todo/index", {todos: todos});
@@ -43,11 +43,11 @@ router.get('/', (req, res, next) => {
   }).catch(next)
 })
 
-router.delete('/:userid', (req, res) => {
-  Todo.delete(req).then(() => {
+router.delete('/:todoid', (req, res) => {
+  Todo.delete(req.params.todoid).then(() => {
     res.format({
       html: function(){
-        res.redirect("todo/index")
+        res.redirect("/todo")
       }, 
       json: function() {
         var response = JSON.stringify({
@@ -80,8 +80,9 @@ router.get("/:todoid/edit", (req, res) => {
   });
 })
 
-router.put('/:userid', (req, res) => {
-  Todo.update(req).then(() => {
+router.put('/:todoid', (req, res) => {
+  console.log(req.body);
+  Todo.update(req, req.body.todoid).then(() => {
     res.format({
       html: function(){
         res.redirect("/todo")

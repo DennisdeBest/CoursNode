@@ -1,20 +1,14 @@
 const router = require('express').Router()
-const db = require('sqlite')
 const User = require('../models/user.js')
 
 
-/* Users : liste */
-router.post('/', (req, res) => {
-  User.insert(req).then(() => {
-    console.log("user "+req.body.name+" inserted");
-  })
-  console.log(req.body)
-})
 router.get('/', (req, res) => {
+  console.log("In the redirect route");
   User.getAll().then((users)=> {
     res.render("users/index", {users: users});
   });
 });
+
 router.get('/add', (req, res) => {
   res.format({
     html: () => {res.render("users/edit")},
@@ -24,7 +18,7 @@ router.get('/add', (req, res) => {
     }
   });
 })
-router.post('/add', (req, res) => {
+router.post('/', (req, res) => {
   User.insert(req).then(() => {
     res.format({
       html: function(){
@@ -38,6 +32,24 @@ router.post('/add', (req, res) => {
   })
   console.log(req.body)
 })
+
+router.post('/add', (req, res) => {
+  console.log("POST user")
+  User.insert(req).then(() => {
+    res.format({
+      html: function(){
+        console.log("ResRedirect")
+        res.redirect("/users")
+      }, 
+      json: function() {
+        res.send(user);
+        console.log("json");
+      }
+    });
+  })
+  console.log(req.body)
+})
+
 router.get('/:userid', (req, res) => {
  User.getById(req).then((user) => {
     res.format({
@@ -89,7 +101,7 @@ router.put('/:userid', (req, res) => {
   });
 });
 router.delete('/:userid', (req, res) => {
-  User.delete.then(() => {
+  User.delete(req.params.userid).then(() => {
     res.format({
       html: function(){
         res.redirect("/users")
