@@ -44,7 +44,7 @@ router.delete('/:teamid', (req, res) => {
 	Team.delete(req.params.teamid).then(() => {
 		res.format({
 			html: function(){
-				res.redirect("/team")
+				res.redirect("/teams")
 			}, 
 			json: function() {
 				var response = JSON.stringify({
