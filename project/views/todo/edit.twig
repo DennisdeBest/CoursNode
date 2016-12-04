@@ -1,7 +1,7 @@
 {% extends '../index.twig' %}
 {% block content %}
 	<h2>Add Todo</h2>
-	{% if todo._id is defined %}
+	{% if todo is defined %}
 		<form method="POST" action="/todo/{{todo._id}}?_method=PUT">
 		{% else %}
 			<form method="POST" action="/todo">
@@ -31,7 +31,7 @@
 					
 				</td>
 			</tr>
-			{% if team._id is defined %}
+			{% if todo is defined %}
 				<tr>
 					<td class="label">
 						<label for="status">Status : </label>
@@ -55,6 +55,7 @@
 				</tr>
 				<tr>
 					<td colspan=2 class="submit">
+						<input type="hidden" name="todoid" value="{{todo._id}}" id="todoid">
 						<input class="submit" type="submit"/>
 					</td>
 				</tr>
