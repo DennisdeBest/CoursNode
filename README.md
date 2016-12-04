@@ -1,4 +1,4 @@
-#VM pour le développement NodeJS
+#Todo List nodeJS
 
 ###Prérequis
 
@@ -19,22 +19,45 @@
 * Pour afficher la page aller à ladresse coursnode.local::"port choisi" depuis la machine hôté
 * modifier les fichiers dans le dossier project depuis la machine hôte, elle sont partagé avec la VM
 
-###Headless webscrapping
+###Le projet
 
-Lancer le script avec xvfb-run node "le nom du script"
+Il y a plusieurs aspects à ce projet que nous allons détailler.
 
-###Projet CLI 
-####Fichiers
-* cli.js : le fichier principale depuis lequel sont lancé les autres fichiers
-* scrapper.js : récupère le contenu des articles payants de sudouest.fr et les stock dans une BDD sqlite
-* reader.js : retourne soit une liste avec les titres des articles disponibles soit le contenu d'un article.
-* export.js : export un article sous format HTML si il n'existe pas encore
-* server.js : lance un serveur web sur le port 8080 qui affiche les articles de la BDD
+####Une gestion utilisateur et session
 
-####Fonctionnement
+Il y a une base de données redis qui stock des ensemble (userid:token), quand un utilisateur se connecte on vérifie si un cookie AccesToken est présent.
+Si ce cookie est éffectivement présent on compare la valeur du token du cookie à la valeur du token de la base redis.
+Si la valeur est la même alors l'utilisateur est redirigé vers la page souhaité, sinon il devra s'authentifier.
+Le ttl du cookie et de l'enregistrement en base redis est de 30min.
 
-Dans le dossier project lancer le fichier cli.js avec **node cli.js** ou **./cli.js**, les options sont : 
-* -r --read [numéro] Si un numéro est rentré affiche l'article correspondant sinon affiche la liste des articles disponibles
-* -s --scrap : Lance scrapper.js et stockes les nouveaux articles dans la BDD
-* -S --server : Démarre un serveur web pour l'affichage des articles sur le port 8080
+il est possilbe d'enregistrer de nouveaux utilisateurs sur le site ou par le biais de l'API.
+Les utilisateurs peuvent se déconnecter de leurs sessions à tout moment en cliquant sur le lien logout.
+
+Nous pouvons à tout moment éditer ou supprimer un utilisateur grâce aux boutons d'actions de la liste de utilisateurs.
+
+####Des équipes
+
+Une gestion d'équipes est également mis en place, une tâche peut donc être assigné à une équipe en plus d'un individu.
+Les équipes se créent, modifient et supprime commes les utilisateurs par le site ou l'API.
+
+A la création ou la modification d'une tâche une liste avec les équipes présentent en base sera généré automatiquement.
+
+###Les tâches (Todos)
+
+Comme pour les utilisateurs et les équipes les tâches peuvent être gèré par l'API ou le site.
+Chaque tâche contient un utilisateur, une priorité (1-5), une équipe et un status (0 par défaut pour une tâche pas encore terminée, 1 quand la tâche est terminée).
+Nous pouvons rapidement identifier les tâches terminées dans la liste car ils ont une couleur plus proche de l'arrière plan et ils sont également barrées.
+
+###Fonctionnement
+
+Une fois la vagrant démarré et que vous avez ouvert une session ssh au sein de la vm il y a plusieurs étapes pour lancer le projet :
+* cd /home/vagrant/project 
+* npm install (les paquets sont installés par ansible en principe mais ça ne fait pas de mal)
+* mongod &>/dev/null (démarrer le serveur mongo et rediriger sur la sortie standard)
+* nodemon app.js
+
+Le serveur redis est déja lancé au démarrage de la machine.
+Vous pouvez ensuite ouvrir un navigateur sur la machine hote et aller à l'adresse to.do:8080.
+
+Il faut maintenant créer un nouvel utilisateur, attention pour que l'utilisateur soit valide il faut rentrer un mot de passe de 8 charactères avec au moins une majuscule et un chiffre 
 
