@@ -1,11 +1,12 @@
 ---
 
-- name: SWFP project
+- name: Scrapper project
   hosts: dev
   remote_user: vagrant
 
   roles:
     - common
+    - mongoDB
     - role: gantsign.oh-my-zsh
       users:
         - username: vagrant

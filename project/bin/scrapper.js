@@ -1,31 +1,36 @@
 #!/usr/bin/node
-	const Nightmare = require('nightmare');
-	const nightmare = Nightmare({ show: true });
-	const Promise = require("bluebird");
-	const promises = [];
-
-	const db = require('sqlite')
-
-	module.exports = {
-  run: function () {
-    getLinks();
-  },
+const Nightmare = require('nightmare');
+const nightmare = Nightmare({ show: true });
+const Promise = require("bluebird");
+const promises = [];
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/Scrapper');
+const Schema = mongoose.Schema;
+module.exports = {
+	run: function () {
+		getLinks();
+	},
 };
 
+var articleSchema = new Schema({
+	title: String,
+	content : String,
+	date : String
+})
 
-	db.open('sudrekt.db').then(() => {
-	  // Une fois la base ouverte, on créé une table
-	  // On n'oublie pas le return qui va permettre de faire suivre la Promise
-	  // et donc de gérer le "catch" plus bas, en cas d'erreur
-	  return db.run('CREATE TABLE IF NOT EXISTS articles (title, content, date)')
-	}).then(() => {
-		console.log('> Database ready')
-	}).catch((err) => { // Si on a eu des erreurs
-		console.error('ERR> ', err)
-	})
+var logSchema = new Schema({
+	level: String,
+	message: String,
+	date: Date
+})
 
+var Log = mongoose.model('Log', logSchema);
+var Article = mongoose.model('Article', articleSchema);
+
+log("1", "NightmareStarted");
 	//Main function, get all premium links from the site and pass them on to get scrapped
 	function getLinks() {
+		console.log("Get links");
 		nightmare
 		.goto('http://sudouest.fr')
 		.wait('#cdx')
@@ -38,6 +43,7 @@
 			{
 				premiumLinks.push($(this).attr('href'));
 			});
+			log("1", premiumLinks[0]);
 			return premiumLinks;
 		})
 		.then(function (result) 
@@ -52,6 +58,7 @@
 	//Return : result(Article Object)
 	var scrapLink = function(link)
 	{
+		console.log(link);
 		return new Promise((resolve, reject) => {
 			nightmare
 			.goto('http://sudouest.fr'+link)
@@ -97,14 +104,15 @@
 	//to wait for the result of the last page being scrapped before scrapping the next one
 	// Params : links(array)
 	function parseLinks(links){
+		console.log(links)
 		if(links.length > 0){
 			var link = links.pop();
 			console.log(link);
 			scrapLink(link).then(function(result)
-		{
-			saveToDb(result.title, result.content, result.date)
-			parseLinks(links);
-		})
+			{
+				saveToDb(result.title, result.content, result.date)
+				parseLinks(links);
+			})
 		}
 		else {	
 			//Set a timeout to make sure the last article is saved before exiting.
@@ -127,14 +135,35 @@
 		if (!date){
 			return Promise.reject(new Error("Missing date"));
 		}
+		return new Promise((resolve, reject) => {
+			article = new Article({
+				message: message,
+				content: content,
+				date: date
+			})
+			article.save(function(err){
+				if(err){
+					reject(err);
+				}
+				resolve(true);
+			})
+		})
+		//make sure the record doesn't already exist	
+	}
 
-		//make sure the record doesn't already exist
-		db.get("SELECT * FROM articles WHERE title=?",title).then((response) => {
-			if(!response){
-				console.log("New article inserted");
-				return db.run("INSERT INTO articles VALUES (?, ?, ?)", title, content, date);
-			}else {
-				return console.log("Record with the same title already exists");
-			}
-		})		
+	function log(level, message){
+		return new Promise((resolve, reject) => {
+			var date = new Date();
+			log = new Log({
+				level: level,
+				message: message,
+				date: date
+			})
+			log.save(function(err){
+				if(err){
+					reject(err);
+				}
+				resolve(true);
+			})
+		})
 	}

@@ -1,0 +1,16 @@
+---
+- name: Add mongo DB repo
+  shell: echo "deb http://repo.mongodb.org/apt/debian jessie/mongodb-org/3.2 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
+
+- name: install mongoDB
+  apt: name="mongodb-org" state="latest" update_cache=yes force="yes"
+  become: yes
+
+- name: export locale
+  lineinfile: dest=/etc/default/locale line="LC_ALL="en_US.UTF-8""
+  become: yes
+
+- name: create mongoDb directory
+  file: path=/data/db state=directory mode=0777
+  become: yes
+...
