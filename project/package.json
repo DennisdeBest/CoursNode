@@ -4,7 +4,7 @@
   "description": "Restfull API using express js",
   "main": "app.js",
   "dependencies": {
-    "bcrypt": "^0.8.7",
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.2",
     "connect": "^3.5.0",
     "cookie-parser": "^1.4.3",
@@ -12,7 +12,6 @@
     "font-awesome": "^4.6.3",
     "ioredis": "^2.4.0",
     "jquery": "^3.1.1",
-    "jquery-awesome-cursor": "^0.3.1",
     "method-override": "^2.3.6",
     "mongoose": "^4.7.0",
     "node-sass-middleware": "^0.9.8",
