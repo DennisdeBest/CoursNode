@@ -1,21 +1,26 @@
 <!DOCTYPE = html>
 <html>
 <head>
-<link href='/font_awesome/css/font-awesome.css' rel="stylesheet" type="text/css" />
-<link href='/css/style.css' type="text/css" rel="stylesheet" />
-<link href="https://fonts.googleapis.com/css?family=Gochi+Hand" rel="stylesheet" /> 
-<script src="/jquery/jquery.min.js"></script>
-<script src="/jquery_awesome_cursor/jquery.awesome-cursor.min.js"></script>
-<script src='/js/cursors.js'></script>
+	<link href='/font_awesome/css/font-awesome.css' rel="stylesheet" type="text/css" />
+	<link href='/css/style.css' type="text/css" rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/css?family=Gochi+Hand" rel="stylesheet" /> 
+	<script src="/jquery/jquery.min.js"></script>
+	<script src="/jquery_awesome_cursor/jquery.awesome-cursor.min.js"></script>
+	<script src='/js/cursors.js'></script>
 </head>
 <body>
-<h1>Todo</h1>
-<i class="fa fa-camera-retro"></i>
-<ul><li><a href="/users">Users</a></li>
-<li><a href="/todo">Todo</a></li>
-<li><a href="/users/add">Add User</a></li><li><a href="/todo/add">Add todo</a></li>
-</ul>
-{% block content %}
-{% endblock %}
+	<h1>Todo</h1>
+	<i class="fa fa-camera-retro"></i>
+	<ul><li><a href="/users">Users</a></li>
+		<li><a href="/users/add">Add User</a></li>
+		<li><a href="/todo">Todos</a></li>
+		<li><a href="/todo/add">Add todo</a></li>
+		<li><a href="/teams">Teams</a></li>
+		<li><a href="/teams/add">Add Team</a></li>
+		<li><a href="/session/logout">Logout</a></li>
+	</ul>
+
+	{% block content %}
+	{% endblock %}
 </body>
 </html>

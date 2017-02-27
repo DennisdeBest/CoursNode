@@ -11,14 +11,15 @@ var Session = function () {
 }
 
 Session.insert = function(id){
-	console.log("redis insert");
 	return new Promise((resolve, reject) => {
 		var date =  new Date();
 		var token = "";
 		let pipeline = redis.pipeline();
 		generateToken().then((token) => {
-			console.log("id "+id+" token "+token);
 			redis.set(id, token).then(() => {
+				//Set TTL to 30minutes
+				redis.expire(id, 1800);
+			}).then(() => {
 				resolve({id:id, token:token})
 			})
 		})
@@ -26,7 +27,16 @@ Session.insert = function(id){
 }
 Session.getToken = function(id){
 	return new Promise((resolve, reject) => {
-		resolve(redis.get(id));
+		redis.get(id).then((id) => {
+			if(id !== null){
+				resolve(id);
+			}
+			else{
+				resolve(false);
+			}
+		
+		})
+		
 	})
 }
 

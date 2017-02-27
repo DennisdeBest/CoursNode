@@ -4,6 +4,8 @@ body {
   background-color: $color-primary;
   font: $font-primary;
   color: $color-secondary;
+  max-width: 800px;
+  margin: auto; 
 }
 h1, h2 {
 	text-align: center;
@@ -15,6 +17,7 @@ ul {
 	display: flex;
 	flex-flow: row;
 	justify-content: space-around;
+  margin-bottom: 50px;
 }
 li {
 	list-style: none; 
@@ -27,6 +30,7 @@ li {
 }
 .formButton {
 	display: inline-block;
+  margin-bottom: 0px;
 }
 input[type="text"], input[type="password"], input[type="email"]
 {
@@ -85,4 +89,14 @@ input[type="submit"]:disabled, button:disabled
 }
 table {
   margin: auto;
+}
+table td, table th {
+  padding: 5px;
+}
+.done {
+  text-decoration: line-through;
+  color: #b8bdc4;
+}
+.done input[type="submit"] {
+  color: #b8bdc4 !important;
 }

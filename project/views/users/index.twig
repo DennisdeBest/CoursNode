@@ -1,9 +1,8 @@
 {% extends '../index.twig' %}
 {% block content %}
-	<table class="table-fill">
+	<table class="table-fill userTable">
 		<thead>
 			<tr>
-				<th>ID</th>
 				<th>Name</th>
 				<th>Email</th>
 				<th>Actions</th>
@@ -12,9 +11,6 @@
 				<tbody>
 					{% for user in users %}
 						<tr>
-							<td>
-								{{ user._id }}
-							</td>
 							<td>
 								<strong>{{user.name}}</strong>
 							</td>

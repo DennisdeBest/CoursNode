@@ -1,48 +1,64 @@
 {% extends '../index.twig' %}
 {% block content %}
-<h2>Edit Todo</h2>
-	<form method="POST" action="/todo/{{todo._id}}?_method=PUT">
-		<table class="table-fill">
-			<tr>
-				<td class="label">
-					<label for="message">Message : </label>
-				</td>
-				<td>
-					<input type="text" class="message" value="{{todo.message}}" name="message" id="message">
+	<h2>Add Todo</h2>
+	{% if todo is defined %}
+		<form method="POST" action="/todo/{{todo._id}}?_method=PUT">
+		{% else %}
+			<form method="POST" action="/todo">
+			{% endif %}
+			<table class="table-fill">
+				<tr>
+					<td class="label">
+						<label for="message">Message : </label>
+					</td>
+					<td>
+						<input type="text" class="message" value="{{todo.message}}" name="message" id="message">
+					</td>
+				</tr>
+				<tr>
+					<td class="label">
+						<label for="team">Team : </label>
+					</td>
+					<td>{% if teams is defined %}
+						<select class="team" value="{{todo.team}}" name="team" id="team">
+							{% for team in teams %}
+								<option value="{{team.name}}">{{team.name}}</option>
+							{% endfor %}
+						</select>
+					{% else %}
+						No teams yet
+					{% endif %}
+					
 				</td>
 			</tr>
-			<tr>
-				<td class="label">
-					<label for="team">Team : </label>
-				</td>
-				<td>
-					<input type="text" class="team" value="{{todo.team}}" name="team" id="team">
-				</td>
-			</tr>
-			<tr>
-				<td class="label">
-					<label for="status">Status : </label>
-				</td>
-				<td>
-					<input type="checkbox" class="status" {% if todo.status == 1 %} checkbox = "checked" value = "1" {% else %}{% endif %} name="status" id="status">
-				</td>
-			</tr>
+			{% if todo is defined %}
+				<tr>
+					<td class="label">
+						<label for="status">Status : </label>
+					</td>
+					<td>
+						<input type="checkbox" class="status" {% if todo.status == 1 %} checked="checked" {% else %}{% endif %} name="status" id="status">
+					</td>
+				</tr>
+			{% endif %}
 			<tr>
 				<td class="label">
 					<label for="priorite">Priorite : </label>
 				</td>
 				<td>
-					<input type="text" class="priorite" value="{{todo.priorite}}" name="priorite" id="priorite">
-				</td>
-			</tr>
-			<tr>
-				<td colspan=2 class="submit">
-					<input class="submit" type="submit"/>
-				</td>
-			</tr>
-		</form>
-	</table>
-	<script>
-
-	</script>
+					<select class="priorite" value="{{todo.priorite}}" name="priorite" id="priorite">
+						{% for i in range (1,5) %}
+							<option value="{{i}}">{{i}}</option>
+						{% endfor %}
+						</select>	
+					</td>
+				</tr>
+				<tr>
+					<td colspan=2 class="submit">
+						<input type="hidden" name="todoid" value="{{todo._id}}" id="todoid">
+						<input class="submit" type="submit"/>
+					</td>
+				</tr>
+			</form>
+		</table>
 	{% endblock %}

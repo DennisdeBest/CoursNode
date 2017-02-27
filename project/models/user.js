@@ -13,13 +13,10 @@ var User = mongoose.model('User', userSchema)
 
 User.update = function(req, id) {
 	return new Promise((resolve, reject) => {
-		console.log("UPDATE");
-		console.log(id)
 		User.findById(id, function(err, user){
 			if(err){
 				reject(err);
 			}
-			console.log(user);
 			var date =  new Date();
 			user.name = req.body.name;
 			user.email = req.body.email;
@@ -40,13 +37,13 @@ User.update = function(req, id) {
 User.insert = function(req) {
 	return new Promise((resolve, reject) => {
 		var date =  new Date();
-		User = new User({
+		user = new User({
 			name: req.body.name,
 			email: req.body.email,
 			password: req.body.password,
 			createdAt: date
 		})
-		User.save(function(err){
+		user.save(function(err){
 			if(err){
 				reject(err);
 			}
@@ -59,20 +56,18 @@ User.getAll = function(){
 		User.find({}, function(err, users) {
 			if (err){
 				reject(err);
-			}
-		console.log(users); 
+			} 
   		resolve(users);
 		});
 	});
 }
-User.delete = function(req) {
+User.delete = function(id) {
 	return new Promise((resolve, reject) => {
-		User.findOneAndRemove({id:req.body.id}, function (err) {
+		User.findOneAndRemove({_id:id}, function (err) {
 			if(err){
 				reject(err);
 			}
-			console.log('User deleted!');
-			resolve(req.body.id);
+			resolve(true);
 		})
 	})
 }
@@ -83,7 +78,6 @@ return new Promise((resolve, reject) => {
 			if(err) {
 				reject(err);
 			}
-			console.log('User deleted!');
 			resolve(user);
 		})
 	})
@@ -94,7 +88,6 @@ return new Promise((resolve, reject) => {
 			if(err) {
 				reject(err);
 			}
-			console.log(user);
 			resolve(user);
 		})
 	})
@@ -106,7 +99,6 @@ User.getByEmail = function(req) {
 			if(err) {
 				reject(err);
 			}
-			console.log(user);
 			resolve(user);
 		})
 	})
