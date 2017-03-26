@@ -51,6 +51,7 @@ Nous pouvons rapidement identifier les tâches terminées dans la liste car ils 
 Une fois connecté, un utilisateur sera redirigé sur la liste des tâches qu'il a créé.
 
 ###Fonctionnement
+####Vagrant
 
 Une fois la vagrant démarré et que vous avez ouvert une session ssh au sein de la vm il y a plusieurs étapes pour lancer le projet :
 * cd /home/vagrant/project 
@@ -62,4 +63,8 @@ Le serveur redis est déja lancé au démarrage de la machine.
 Vous pouvez ensuite ouvrir un navigateur sur la machine hote et aller à l'adresse to.do:8080.
 
 Il faut maintenant créer un nouvel utilisateur, attention pour que l'utilisateur soit valide il faut rentrer un mot de passe de 8 charactères avec au moins une majuscule et un chiffre 
+
+####Docker-compose
+Faites un docker-compose up dans le répertoire project.
+Dans votre navigateur allez sur localhost:8884
 

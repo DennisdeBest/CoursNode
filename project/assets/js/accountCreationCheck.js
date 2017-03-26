@@ -47,8 +47,14 @@ $(document).ready(function() {
 		} else {
 			$(this).addClass("inputKo");
 			$(this).removeClass("inputoK")
-			$('.password-instructions').show();
 			passwordCheck = false;
+		}
+	})
+	$('.password').bind("focusout", function(){
+		if(password_pattern.test($(this).val())){
+			$('.password-instructions').hide();
+		} else {
+			$('.password-instructions').show();
 		}
 	})
 	$('.passwordRepeat').bind("keyup change", function(){
@@ -76,10 +82,10 @@ $(document).ready(function() {
 	$('input').bind("keyup change", function(){
 		var pass = $('.password').val();
 		var mail = $('.email').val();
-		console.log("keydown");
-		console.log("n" + nameCheck + passwordCheck + passwordRepeatCheck + emailCheck)
+		//console.log("keydown");
+		//console.log("n" + nameCheck + passwordCheck + passwordRepeatCheck + emailCheck)
 		if(nameCheck && passwordCheck && passwordRepeatCheck && emailCheck) {
-			console.log("conditions met");
+			//console.log("conditions met");
 			$('.submit').attr('disabled', false);
 		} 
 	})
