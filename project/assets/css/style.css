@@ -108,3 +108,8 @@ table td, table th {
 .done input[type="submit"] {
   color: #b8bdc4 !important;
 }
+.password-instructions {
+	display: none;
+	font-size: 0.8em;
+	color: red;
+}

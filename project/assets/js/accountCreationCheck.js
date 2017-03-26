@@ -42,10 +42,12 @@ $(document).ready(function() {
 		if(password_pattern.test($(this).val())){
 			$(this).addClass("inputOk");
 			$(this).removeClass("inputKo");
+			$('.password-instructions').hide();
 			passwordCheck = true;
 		} else {
 			$(this).addClass("inputKo");
 			$(this).removeClass("inputoK")
+			$('.password-instructions').show();
 			passwordCheck = false;
 		}
 	})
