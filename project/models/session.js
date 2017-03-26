@@ -1,8 +1,7 @@
 const db = require('sqlite')
 const crypto = require('crypto')
 const Redis = require('ioredis')
-const redis = new Redis()
-
+const redis = new Redis(6379, process.env.REDIS_HOST || '127.0.0.1');
 var Session = function () {  
 	this.userId = "";
 	this.accessToken = "";

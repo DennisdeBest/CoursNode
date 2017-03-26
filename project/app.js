@@ -9,7 +9,8 @@ const sass = require('node-sass-middleware')
 const cookieParser = require('cookie-parser')
 const mongoose = require('mongoose');
 const Session = require('./models/session.js')
-mongoose.connect('mongodb://localhost:27017/Todo');
+var host = process.env.MONGO_HOST || 'localhost';
+mongoose.connect('mongodb://'+host+'/Todo');
 
 app.use(cookieParser())
 
